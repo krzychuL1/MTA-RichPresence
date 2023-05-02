@@ -34,13 +34,6 @@ function createWindow() {
       },
     });
 
-    ipcMain.on('reset-rpc-status', () => {
-      currentStatus = null;
-      currentStatus2 = null;
-  setRichPresence();
-  win.webContents.send('log', `Status został zresetowany! ✅`);
-    });
-
    win.removeMenu();
   win.webContents.on('devtools-opened', () => {
    win.webContents.closeDevTools();
@@ -77,6 +70,17 @@ function checkProcess() {
     }
   });
 }
+
+ipcMain.on('reset-rpc-status', () => {
+  currentStatus = null;
+  currentStatus2 = null;
+  if (win.logsSent.isRunning == true) {
+setRichPresence();
+win.webContents.send('log', `Status został zresetowany! ✅`);
+} else {
+  win.webContents.send('log', 'MTA jest wyłączone! ❌');
+}
+});
 
 let currentStatus2 = null;
 let currentStatus = null;
