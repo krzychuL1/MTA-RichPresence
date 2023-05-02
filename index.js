@@ -4,6 +4,7 @@ const DiscordRPC = require('discord-rpc');
 
 let rpc;
 let win;
+const startTimestamp = Date.now();
 
 function createWindow() {
     win = new BrowserWindow({
@@ -40,7 +41,7 @@ function checkProcess() {
 function setRichPresence() {
     rpc.setActivity({
         largeImageKey: 'mta',
-        startTimestamp: Date.now(),
+        startTimestamp,
         instance: false,
     })
         .then(() => {
