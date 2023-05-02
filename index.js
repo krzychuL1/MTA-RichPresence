@@ -213,7 +213,7 @@ app.whenReady().then(() => {
   createWindow();
 
   // Sprawdzanie aktualizacji
-  //autoUpdater.checkForUpdates();
+  autoUpdater.checkForUpdates();
 
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     const dialogOpts = {
