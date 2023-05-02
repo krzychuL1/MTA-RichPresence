@@ -28,12 +28,10 @@ function checkProcess() {
         }
 
         if (resultList.length > 0) {
-            console.log('MTA is running!');
-            win.webContents.send('log', 'MTA is running!');
+            win.webContents.send('log', 'MTA jest włączone!');
             setRichPresence();
         } else {
-            console.log('MTA is not running');
-            win.webContents.send('log', 'MTA is not running');
+            win.webContents.send('log', 'MTA jest wyłączone!');
             clearRichPresence();
         }
     });
@@ -41,14 +39,12 @@ function checkProcess() {
 
 function setRichPresence() {
     rpc.setActivity({
-        details: 'test number 1',
-        state: 'In game',
-        largeImageKey: 'test number 2',
+        largeImageKey: 'mta',
+        startTimestamp: Date.now(),
         instance: false,
     })
         .then(() => {
-            console.log('Discord Rich Presence set');
-            win.webContents.send('log', 'Discord Rich Presence set');
+            win.webContents.send('log', 'Statu został ustawiony!');
         })
         .catch(console.error);
 }
@@ -56,8 +52,7 @@ function setRichPresence() {
 function clearRichPresence() {
     rpc.clearActivity()
         .then(() => {
-            console.log('Discord Rich Presence cleared');
-            win.webContents.send('log', 'Discord Rich Presence cleared');
+            win.webContents.send('log', 'Statu został usunięty!');
         })
         .catch(console.error);
 }
@@ -69,8 +64,7 @@ app.whenReady().then(() => {
         console.log('Window loaded');
         rpc = new DiscordRPC.Client({ transport: 'ipc' });
         rpc.on('ready', () => {
-            console.log('Discord Rich Presence is ready');
-            win.webContents.send('log', 'Discord Rich Presence is ready');
+            win.webContents.send('log', 'Status jest gotowy!');
             checkProcess();
             setInterval(checkProcess, 5000);
         });
