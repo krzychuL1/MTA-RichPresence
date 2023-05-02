@@ -11,8 +11,9 @@
 </head>
 <body>
   <h1 style="text-align: center; size: 50px;">MTA Discord Rich Presence</h1>
+  <p style="text-align: center; size: 15px">Wersja 1.0.0</p>
   <div class="logi">
-    <pre id="log"></pre>
+    <strong><pre id="log"></pre></strong>
   </div>
   <script>
     const { ipcRenderer } = require('electron');
@@ -21,5 +22,6 @@
       logEl.textContent += data + '\n';
     });
   </script>
+
 </body>
 </html>
