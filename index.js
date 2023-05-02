@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const ps = require('ps-node');
 const DiscordRPC = require('discord-rpc');
 const { autoUpdater } = require('electron-updater');
