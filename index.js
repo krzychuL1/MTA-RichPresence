@@ -41,57 +41,6 @@ function createWindow() {
   win.webContents.send('log', `Status został zresetowany! ✅`);
     });
 
-    let currentStatus = null;
-
-    ipcMain.on('set-status', (event, status) => {
-      if (currentStatus === status) {
-        win.webContents.send('log', `Status frakcyjny "${status}" jest już ustawiony! ❌`);
-        return;
-      }
-      const data = Date.now()
-      switch (status) {
-          case 'San Andreas Police Department':
-            rpc.setActivity({
-              details: `Frakcja`,
-              state: status,
-              largeImageKey: 'mta',
-              instance: false,
-              startTimestamp: data,
-            });
-            currentStatus = status;
-            currentStatus2 = null;
-            win.webContents.send('log', `Status frakcyjny "${status}" został ustawiony! ✅`);
-              break;
-          case 'San Andreas Road Assistance':
-            rpc.setActivity({
-              details: `Frakcja`,
-              state: status,
-              largeImageKey: 'mta',
-              instance: false,
-              startTimestamp: data,
-            });
-            currentStatus = status;
-            currentStatus2 = null;
-            win.webContents.send('log', `Status frakcyjny "${status}" został ustawiony! ✅`);
-              break;
-          case 'Transport of San Andreas':
-            rpc.setActivity({
-              details: `Frakcja`,
-              state: status,
-              largeImageKey: 'mta',
-              instance: false,
-              startTimestamp: data,
-            });
-            currentStatus = status;
-            currentStatus2 = null;
-            win.webContents.send('log', `Status frakcyjny "${status}" został ustawiony! ✅`);
-              break;
-          default:
-              console.error(`Nieznany status: ${status}`);
-      }
-  });
-
-
    win.removeMenu();
   win.webContents.on('devtools-opened', () => {
    win.webContents.closeDevTools();
@@ -129,7 +78,52 @@ function checkProcess() {
   });
 }
 
+let currentStatus2 = null;
 let currentStatus = null;
+
+    ipcMain.on('set-status2', (event, status2) => {
+      if (currentStatus2 === status2) {
+        win.webContents.send('log', `Status biznesowy "${status2}" jest już ustawiony! ❌`);
+        return;
+      }
+      const data = Date.now()
+      switch (status2) {
+          case 'Buildings4you':
+            if (win.logsSent.isRunning == true) {
+              rpc.setActivity({
+                details: `Biznes`,
+                state: status2,
+                largeImageKey: 'mta',
+                instance: false,
+                startTimestamp: data,
+              });
+              currentStatus2 = status2;
+              currentStatus = null;
+              win.webContents.send('log', `Status biznesowy "${status2}" został ustawiony! ✅`);
+            } else {
+              win.webContents.send('log', 'MTA jest wyłączone! ❌');
+            }
+              break;
+          case '41.St Mechanized Infantry Division':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `Biznes`,
+              state: status2,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus2 = status2;
+            currentStatus = null;
+            win.webContents.send('log', `Status biznesowy "${status2}" został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+              break;
+          default:
+              console.error(`Nieznany status: ${status2}`);
+      }
+  });
 
 ipcMain.on('set-status', (event, status) => {
   if (currentStatus === status) {
@@ -190,53 +184,6 @@ ipcMain.on('set-status', (event, status) => {
           console.error(`Nieznany status: ${status}`);
   }
 });
-
-
-let currentStatus2 = null;
-
-    ipcMain.on('set-status2', (event, status2) => {
-      if (currentStatus2 === status2) {
-        win.webContents.send('log', `Status biznesowy "${status2}" jest już ustawiony! ❌`);
-        return;
-      }
-      const data = Date.now()
-      switch (status2) {
-          case 'Buildings4you':
-            if (win.logsSent.isRunning == true) {
-              rpc.setActivity({
-                details: `Biznes`,
-                state: status2,
-                largeImageKey: 'mta',
-                instance: false,
-                startTimestamp: data,
-              });
-              currentStatus2 = status2;
-              currentStatus = null;
-              win.webContents.send('log', `Status biznesowy "${status2}" został ustawiony! ✅`);
-            } else {
-              win.webContents.send('log', 'MTA jest wyłączone! ❌');
-            }
-              break;
-          case '41.St Mechanized Infantry Division':
-            if (win.logsSent.isRunning == true) {
-            rpc.setActivity({
-              details: `Biznes`,
-              state: status2,
-              largeImageKey: 'mta',
-              instance: false,
-              startTimestamp: data,
-            });
-            currentStatus2 = status2;
-            currentStatus = null;
-            win.webContents.send('log', `Status biznesowy "${status2}" został ustawiony! ✅`);
-          } else {
-            win.webContents.send('log', 'MTA jest wyłączone! ❌');
-          }
-              break;
-          default:
-              console.error(`Nieznany status: ${status2}`);
-      }
-  });
 
 function setRichPresence() {
   const data = Date.now()
