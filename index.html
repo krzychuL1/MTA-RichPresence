@@ -2,51 +2,8 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <style>
-    .przyciski{
-      height: 100px;
-      width: 780px;
-    }
-    .pasek {
-      position: fixed;
-      top: 37%;
-      height: 2px;
-      width: 100%;
-      background-color: black; 
-    }
-    .logi{
-      text-align: center;
-      size: 20px;
-    }
-    #update-progress {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 30px;
-  background-color: #f1f1f1;
-  z-index: 9999;
-}
-
-#progress-bar {
-  height: 100%;
-  width: 0%;
-  background-color: #4caf50;
-}
-
-#progress-percentage {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 5px 10px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-}
-
-    
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <script src="index.js"></script>
 </head>
 <body>
   <h1 style="text-align: center; size: 50px; font-family: Impact, Haettenschweiler, sans-serif;">MTA Discord Rich Presence</h1>
@@ -74,9 +31,11 @@
   </div>
   <div id="status" style="position: fixed; bottom: 10px; right: 10px;"></div>
 
-  <div id="update-progress" style="display: none;">
-    Pobieranie aktualizacji: <span id="progress-percentage"></span>%
-    <progress id="progress-bar" max="100" value="0"></progress>
+  <div id="update-progress">
+    <div id="progress-bar-wrapper">
+      <progress id="progress-bar" value="0" max="100"></progress>
+      <span id="progress-percentage">0</span>%
+    </div>
   </div>
 
   <script>
@@ -139,19 +98,6 @@ const statusEl = document.getElementById('status');
 
   // Uruchomienie animacji z prędkością 500ms na ramkę
   const intervalId = setInterval(nextFrame, 500);
-
-  const { autoUpdater } = require('electron');
-const progressEl = document.getElementById('update-progress');
-const progressPercentageEl = document.getElementById('progress-percentage');
-const progressBarEl = document.getElementById('progress-bar');
-
-autoUpdater.on('download-progress', (progressObj) => {
-  // Aktualizuj treść diva
-  progressPercentageEl.innerText = Math.round(progressObj.percent);
-  progressBarEl.value = progressObj.percent;
-  progressEl.style.display = 'block';
-});
-
   </script>
 
 </body>

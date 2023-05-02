@@ -158,6 +158,33 @@ function createWindow() {
       console.error('There was a problem updating the application')
       console.error(message)
     })
+
+    const progressEl = document.getElementById('update-progress');
+    const progressPercentageEl = document.getElementById('progress-percentage');
+    const progressBarEl = document.getElementById('progress-bar');
+    
+    autoUpdater.on('download-progress', (progressObj) => {
+      // Aktualizuj treść diva
+      progressPercentageEl.innerText = Math.round(progressObj.percent);
+      progressBarEl.value = progressObj.percent;
+      progressEl.style.display = 'block';
+    });
+
+    autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+      const dialogOpts = {
+        type: 'question',
+        buttons: ['Restart', 'Później'],
+        title: 'Aktualizacja aplikacji.',
+        message: process.platform === 'win32' ? releaseNotes : releaseName,
+        detail:
+          'Nowa wersja została pobrana. Czy chcesz zrestartować aplikację aby ją zainstalować?',
+      }
+    
+      dialog.showMessageBox(dialogOpts).then((returnValue) => {
+        if (returnValue.response === 0) autoUpdater.quitAndInstall()
+      })
+    })
+
   
     return win;
   }
