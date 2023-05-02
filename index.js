@@ -1,7 +1,9 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const ps = require('ps-node');
 const DiscordRPC = require('discord-rpc');
-const { autoUpdater } = require('electron-updater');
+const { autoUpdater } = require('electron-updater')
+const path = require('path');
+const url = require('url');;
 
 autoUpdater.autoDownload = true;
 autoUpdater.autoInstallOnAppQuit = false;
@@ -36,7 +38,7 @@ function createWindow() {
       currentStatus = null;
       currentStatus2 = null;
   setRichPresence();
-  win.webContents.send('log', `Statu został zresetowany! ✅`);
+  win.webContents.send('log', `Status został zresetowany! ✅`);
     });
 
     let currentStatus = null;
@@ -50,8 +52,8 @@ function createWindow() {
       switch (status) {
           case 'San Andreas Police Department':
             rpc.setActivity({
-              details: 'test 1',
-              state: 'test 1',
+              details: `Frakcja`,
+              state: status,
               largeImageKey: 'mta',
               instance: false,
               startTimestamp: data,
@@ -62,8 +64,8 @@ function createWindow() {
               break;
           case 'San Andreas Road Assistance':
             rpc.setActivity({
-              details: 'test 2',
-              state: 'test 2',
+              details: `Frakcja`,
+              state: status,
               largeImageKey: 'mta',
               instance: false,
               startTimestamp: data,
@@ -74,8 +76,8 @@ function createWindow() {
               break;
           case 'Transport of San Andreas':
             rpc.setActivity({
-              details: 'test 3',
-              state: 'test 3',
+              details: `Frakcja`,
+              state: status,
               largeImageKey: 'mta',
               instance: false,
               startTimestamp: data,
@@ -101,8 +103,8 @@ function createWindow() {
       switch (status2) {
           case 'Buildings4you':
             rpc.setActivity({
-              details: 'test 4',
-              state: 'test 4',
+              details: `Biznes`,
+              state: status2,
               largeImageKey: 'mta',
               instance: false,
               startTimestamp: data,
@@ -113,8 +115,8 @@ function createWindow() {
               break;
           case '41.St Mechanized Infantry Division':
             rpc.setActivity({
-              details: 'test 5',
-              state: 'test 5',
+              details: `Biznes`,
+              state: status2,
               largeImageKey: 'mta',
               instance: false,
               startTimestamp: data,
@@ -135,6 +137,7 @@ function createWindow() {
   win.webContents.on('devtools-opened', () => {
    win.webContents.closeDevTools();
   });
+
   win.webContents.on('before-input-event', (event, input) => {
     if (input.control && input.shift && input.key.toLowerCase() === 'i') {
       event.preventDefault();
@@ -142,50 +145,10 @@ function createWindow() {
   });
   
     win.loadFile('index.html');
+
   
     // Dodaj właściwość logsSent do obiektu win
     win.logsSent = {};
-
-      // Włącz/Wyłącz sprawdzanie aktualizacji
-     autoUpdater.checkForUpdates();
-     
-     autoUpdater.on('update-available', (info) => {
-    })
-    autoUpdater.on('update-not-available', (info) => {
-      sendStatusToWindow('Update not available.');
-    })
-    autoUpdater.on('error', (message) => {
-      console.error('There was a problem updating the application')
-      console.error(message)
-    })
-
-    const progressEl = document.getElementById('update-progress');
-    const progressPercentageEl = document.getElementById('progress-percentage');
-    const progressBarEl = document.getElementById('progress-bar');
-    
-    autoUpdater.on('download-progress', (progressObj) => {
-      // Aktualizuj treść diva
-      progressPercentageEl.innerText = Math.round(progressObj.percent);
-      progressBarEl.value = progressObj.percent;
-      progressEl.style.display = 'block';
-    });
-
-    autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-      const dialogOpts = {
-        type: 'question',
-        buttons: ['Restart', 'Później'],
-        title: 'Aktualizacja aplikacji.',
-        message: process.platform === 'win32' ? releaseNotes : releaseName,
-        detail:
-          'Nowa wersja została pobrana. Czy chcesz zrestartować aplikację aby ją zainstalować?',
-      }
-    
-      dialog.showMessageBox(dialogOpts).then((returnValue) => {
-        if (returnValue.response === 0) autoUpdater.quitAndInstall()
-      })
-    })
-
-  
     return win;
   }
 
@@ -248,6 +211,25 @@ app.whenReady().then(() => {
   rpc.login({ clientId: '1081236894689538058' }).catch(console.error);
 
   createWindow();
+
+  // Sprawdzanie aktualizacji
+  //autoUpdater.checkForUpdates();
+
+  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+    const dialogOpts = {
+      type: 'question',
+      buttons: ['Restart', 'Później'],
+      title: 'Aktualizacja aplikacji.',
+      message: process.platform === 'win32' ? releaseNotes : releaseName,
+      detail:
+        'Nowa wersja została pobrana. Czy chcesz zrestartować aplikację aby ją zainstalować?',
+    }
+  
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+      if (returnValue.response === 0) autoUpdater.quitAndInstall()
+    })
+  })
+
   win.webContents.on('did-finish-load', () => {
     if (!win.logsSent.windowLoaded) {
     win.webContents.send('log', 'Program załadowany! ✅');
