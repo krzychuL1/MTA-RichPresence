@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const ps = require('ps-node');
 const DiscordRPC = require('discord-rpc');
 const { autoUpdater } = require('electron-updater');
@@ -18,18 +18,128 @@ Object.defineProperty(app, 'isPackaged', {
   }
 
 let rpc;
-const data = Date.now()
 
 function createWindow() {
     win = new BrowserWindow({
       width: 800,
       height: 600,
+      frame: true,
+      resizable: false,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
-        enableRemoteModule: true,
+        enableRemoteModule: true,    
       },
     });
+
+    ipcMain.on('reset-rpc-status', () => {
+      currentStatus = null;
+      currentStatus2 = null;
+  setRichPresence();
+  win.webContents.send('log', `Statu został zresetowany! ✅`);
+    });
+
+    let currentStatus = null;
+
+    ipcMain.on('set-status', (event, status) => {
+      if (currentStatus === status) {
+        win.webContents.send('log', `Status frakcyjny "${status}" jest już ustawiony! ❌`);
+        return;
+      }
+      const data = Date.now()
+      switch (status) {
+          case 'San Andreas Police Department':
+            rpc.setActivity({
+              details: 'test 1',
+              state: 'test 1',
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus = status;
+            currentStatus2 = null;
+            win.webContents.send('log', `Status frakcyjny "${status}" został ustawiony! ✅`);
+              break;
+          case 'San Andreas Road Assistance':
+            rpc.setActivity({
+              details: 'test 2',
+              state: 'test 2',
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus = status;
+            currentStatus2 = null;
+            win.webContents.send('log', `Status frakcyjny "${status}" został ustawiony! ✅`);
+              break;
+          case 'Transport of San Andreas':
+            rpc.setActivity({
+              details: 'test 3',
+              state: 'test 3',
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus = status;
+            currentStatus2 = null;
+            win.webContents.send('log', `Status frakcyjny "${status}" został ustawiony! ✅`);
+              break;
+          default:
+              console.error(`Nieznany status: ${status}`);
+      }
+  });
+
+
+  let currentStatus2 = null;
+
+    ipcMain.on('set-status2', (event, status2) => {
+      if (currentStatus2 === status2) {
+        win.webContents.send('log', `Status biznesowy "${status2}" jest już ustawiony! ❌`);
+        return;
+      }
+      const data = Date.now()
+      switch (status2) {
+          case 'Buildings4you':
+            rpc.setActivity({
+              details: 'test 4',
+              state: 'test 4',
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus2 = status2;
+            currentStatus = null;
+            win.webContents.send('log', `Status biznesowy "${status2}" został ustawiony! ✅`);
+              break;
+          case '41.St Mechanized Infantry Division':
+            rpc.setActivity({
+              details: 'test 5',
+              state: 'test 5',
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus2 = status2;
+            currentStatus = null;
+            win.webContents.send('log', `Status biznesowy "${status2}" został ustawiony! ✅`);
+              break;
+          default:
+              console.error(`Nieznany status: ${status2}`);
+      }
+  });
+  
+
+
+
+   win.removeMenu();
+  win.webContents.on('devtools-opened', () => {
+   win.webContents.closeDevTools();
+  });
+  win.webContents.on('before-input-event', (event, input) => {
+    if (input.control && input.shift && input.key.toLowerCase() === 'i') {
+      event.preventDefault();
+    }
+  });
   
     win.loadFile('index.html');
   
@@ -97,6 +207,7 @@ function checkProcess() {
 }
 
 function setRichPresence() {
+  const data = Date.now()
   rpc.setActivity({
     largeImageKey: 'mta',
     instance: false,
