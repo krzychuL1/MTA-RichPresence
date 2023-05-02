@@ -37,7 +37,8 @@ function createWindow() {
     win.logsSent = {};
 
       // Włącz/Wyłącz sprawdzanie aktualizacji
-     autoUpdater.checkForUpdates();
+     //autoUpdater.checkForUpdates();
+     
      autoUpdater.on('update-available', (info) => {
     })
     autoUpdater.on('update-not-available', (info) => {
