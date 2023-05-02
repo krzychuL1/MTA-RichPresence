@@ -158,32 +158,6 @@ function createWindow() {
       console.error('There was a problem updating the application')
       console.error(message)
     })
-    autoUpdater.on('download-progress', (progressObj) => {
-      let log_message = "Download speed: " + progressObj.bytesPerSecond;
-      log_message = log_message + ' - Pobrano ' + progressObj.percent + '%';
-      log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-      //sendStatusToWindow(log_message);
-      const pobieraie = {
-        type: 'info',
-        title: 'Pobieranie aktualizacji...',
-        message: log_message,
-      }
-      dialog.showMessageBox(pobieraie)
-    })
-    autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-      const dialogOpts = {
-        type: 'question',
-        buttons: ['Restart', 'Później'],
-        title: 'Aktualizacja aplikacji.',
-        message: process.platform === 'win32' ? releaseNotes : releaseName,
-        detail:
-          'Nowa wersja została pobrana. Czy chcesz zrestartować aplikację aby ją zainstalować?',
-      }
-    
-      dialog.showMessageBox(dialogOpts).then((returnValue) => {
-        if (returnValue.response === 0) autoUpdater.quitAndInstall()
-      })
-    })
   
     return win;
   }
