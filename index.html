@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <pre id="log"></pre>
+  <script>
+    const { ipcRenderer } = require('electron');
+    ipcRenderer.on('log', (event, data) => {
+      const logEl = document.getElementById('log');
+      logEl.textContent += data + '\n';
+    });
+  </script>
+</body>
+</html>
