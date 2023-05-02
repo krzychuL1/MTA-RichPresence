@@ -1,7 +1,7 @@
 {
   "name": "mta_richpresence",
-  "productName": "MTA RichPresence 4Life Edition",
-  "version": "1.0.0",
+  "productName": "MTA RichPresence",
+  "version": "1.0.1",
   "description": "tak",
   "main": "index.js",
   "repository": {
