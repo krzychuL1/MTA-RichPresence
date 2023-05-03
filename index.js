@@ -2,8 +2,7 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const ps = require('ps-node');
 const DiscordRPC = require('discord-rpc');
 const { autoUpdater } = require('electron-updater')
-const path = require('path');
-const url = require('url');;
+const Gamedig = require('gamedig');
 
 autoUpdater.autoDownload = true;
 autoUpdater.autoInstallOnAppQuit = false;
@@ -87,7 +86,8 @@ let currentStatus = null;
 
     ipcMain.on('set-status2', (event, status2) => {
       if (currentStatus2 === status2) {
-        win.webContents.send('log', `Status biznesowy "${status2}" jest już ustawiony! ❌`);
+        win.webContents.send('log', `Status "${status2}"
+        jest już ustawiony! ❌`);
         return;
       }
       const data = Date.now()
@@ -95,15 +95,16 @@ let currentStatus = null;
           case 'Buildings4you':
             if (win.logsSent.isRunning == true) {
               rpc.setActivity({
-                details: `Biznes`,
-                state: status2,
+                details: `• Biznes`,
+                state: `• ${status2}`,
                 largeImageKey: 'mta',
                 instance: false,
                 startTimestamp: data,
               });
               currentStatus2 = status2;
               currentStatus = null;
-              win.webContents.send('log', `Status biznesowy "${status2}" został ustawiony! ✅`);
+              win.webContents.send('log', `Status "${status2}"
+              został ustawiony! ✅`);
             } else {
               win.webContents.send('log', 'MTA jest wyłączone! ❌');
             }
@@ -111,15 +112,16 @@ let currentStatus = null;
           case '41.St Mechanized Infantry Division':
             if (win.logsSent.isRunning == true) {
             rpc.setActivity({
-              details: `Biznes`,
-              state: status2,
+              details: `• Biznes`,
+              state: `• ${status2}`,
               largeImageKey: 'mta',
               instance: false,
               startTimestamp: data,
             });
             currentStatus2 = status2;
             currentStatus = null;
-            win.webContents.send('log', `Status biznesowy "${status2}" został ustawiony! ✅`);
+            win.webContents.send('log', `Status "${status2}"
+            został ustawiony! ✅`);
           } else {
             win.webContents.send('log', 'MTA jest wyłączone! ❌');
           }
@@ -131,7 +133,8 @@ let currentStatus = null;
 
 ipcMain.on('set-status', (event, status) => {
   if (currentStatus === status) {
-    win.webContents.send('log', `Status frakcyjny "${status}" jest już ustawiony! ❌`);
+    win.webContents.send('log', `Status "${status}" 
+    jest już ustawiony! ❌`);
     return;
   }
   const data = Date.now()
@@ -139,15 +142,16 @@ ipcMain.on('set-status', (event, status) => {
       case 'San Andreas Police Department':
         if (win.logsSent.isRunning == true) {
         rpc.setActivity({
-          details: `Frakcja`,
-          state: status,
+          details: `• Frakcja`,
+          state: `• ${status}`,
           largeImageKey: 'mta',
           instance: false,
           startTimestamp: data,
         });
         currentStatus = status;
         currentStatus2 = null;
-        win.webContents.send('log', `Status frakcyjny "${status}" został ustawiony! ✅`);
+        win.webContents.send('log', `Status "${status}"
+        został ustawiony! ✅`);
       } else {
         win.webContents.send('log', 'MTA jest wyłączone! ❌');
       }
@@ -155,15 +159,16 @@ ipcMain.on('set-status', (event, status) => {
       case 'San Andreas Road Assistance':
         if (win.logsSent.isRunning == true) {
         rpc.setActivity({
-          details: `Frakcja`,
-          state: status,
+          details: `• Frakcja`,
+          state: `• ${status}`,
           largeImageKey: 'mta',
           instance: false,
           startTimestamp: data,
         });
         currentStatus = status;
         currentStatus2 = null;
-        win.webContents.send('log', `Status frakcyjny "${status}" został ustawiony! ✅`);
+        win.webContents.send('log', `Status "${status}"
+        został ustawiony! ✅`);
       } else {
         win.webContents.send('log', 'MTA jest wyłączone! ❌');
       }
@@ -171,15 +176,16 @@ ipcMain.on('set-status', (event, status) => {
       case 'Transport of San Andreas':
         if (win.logsSent.isRunning == true) {
         rpc.setActivity({
-          details: `Frakcja`,
-          state: status,
+          details: `• Frakcja`,
+          state: `• ${status}`,
           largeImageKey: 'mta',
           instance: false,
           startTimestamp: data,
         });
         currentStatus = status;
         currentStatus2 = null;
-        win.webContents.send('log', `Status frakcyjny "${status}" został ustawiony! ✅`);
+        win.webContents.send('log', `Status "${status}"
+        został ustawiony! ✅`);
       } else {
         win.webContents.send('log', 'MTA jest wyłączone! ❌');
       }
@@ -189,7 +195,8 @@ ipcMain.on('set-status', (event, status) => {
   }
 });
 
-function setRichPresence() {
+
+async function setRichPresence() {
   const data = Date.now()
   rpc.setActivity({
     largeImageKey: 'mta',
@@ -227,7 +234,8 @@ app.whenReady().then(() => {
     setInterval(checkProcess, 5000);
   });
 
-  rpc.login({ clientId: '1081236894689538058' }).catch(console.error);
+  rpc.login({ clientId: '1081236894689538058' }).catch(console.error)
+
 
   createWindow();
 

@@ -6,26 +6,30 @@
 </head>
 <body>
   <h1 style="text-align: center; size: 50px; font-family: Impact, Haettenschweiler, sans-serif;">MTA Discord Rich Presence 4Life Edition</h1>
-  <p style="text-align: center; size: 15px">Wersja 1.0.0</p>
-  <div class="przyciski">
-    <label for="status-select">Statusy frakcyjne:</label>
-    <select style="position: fixed; left: 20%;" id="status-select">
-        <option value="San Andreas Police Department">San Andreas Police Department</option>
-        <option value="San Andreas Road Assistance">San Andreas Road Assistance</option>
-        <option value="Transport of San Andreas">Transport of San Andreas</option>
-    </select>
-    <label style="position: fixed; left: 50%;" for="status-select2">Statusy biznesowe:</label>
-    <select style="position: fixed; left: 70%;" id="status-select2">
-        <option value="Buildings4you">Buildings4you</option>
-        <option value="41.St Mechanized Infantry Division">41.St Mechanized Infantry Division</option>
-    </select><br>
-    <button style="position: fixed; left: 10%; top: 25%;" id="set-status-button">Ustaw Status Frakcyjny</button>
-    <button style="position: fixed; left: 60%; top: 25%;" id="set-status-button2">Ustaw Status Biznesowy</button><br>
-    <button style="position: fixed; left: 38%; top: 32%;" id="status-reset">Zresetuj status</button>
-    <button style="position: fixed; left: 52%; top: 32%;" id="clear-log-btn">Wyczyść log</button>
-    <div class="pasek"></div>
-  </div>
-  <div class="logi">
+  <p style="text-align: center; size: 15px">Wersja 1.0.1</p>
+
+        <div class="sidebar-menu">
+   <h3 class="frakcje">Frakcje i Biznesy</h3>
+        <select id="status-select">
+            <option value="San Andreas Police Department">San Andreas Police Department</option>
+            <option value="San Andreas Road Assistance">San Andreas Road Assistance</option>
+            <option value="Transport of San Andreas">Transport of San Andreas</option>
+        </select>
+        <br>
+        <button id="set-status-button">Ustaw Status Frakcyjny</button><br></br>
+        <select id="status-select2">
+            <option value="Buildings4you">Buildings4you</option>
+            <option value="41.St Mechanized Infantry Division">41.St Mechanized Infantry Division</option>
+        </select><br>
+        <button id="set-status-button2">Ustaw Status Biznesowy</button><br>
+
+        </div>
+
+
+  <button id="status-reset">Zresetuj status</button>
+  <button id="clear-log-btn">Wyczyść log</button>
+  <div class="logidiv">
+    <h3 class="logh3">Logi</h3>
     <strong><pre id="log"></pre></strong>
   </div>
   <div id="status" style="position: fixed; bottom: 10px; right: 10px;"></div>
@@ -35,20 +39,23 @@
 const { ipcRenderer } = require('electron');
 const MAX_LOG_LENGTH = 460; // maksymalna długość loga
 
+const logEl = document.getElementById('log');
+
 // nasłuchiwanie na kliknięcie przycisku "Wyczyść log"
 const clearLogBtn = document.getElementById('clear-log-btn');
 clearLogBtn.addEventListener('click', () => {
-  const logEl = document.getElementById('log');
   logEl.textContent = '';
 });
 
 ipcRenderer.on('log', (event, data) => {
-  const logEl = document.getElementById('log');
   logEl.textContent += data + '\n';
 
   // usuń starsze wpisy, kiedy długość tekstu przekroczy MAX_LOG_LENGTH
   if (logEl.textContent.length > MAX_LOG_LENGTH) {
-    logEl.textContent = logEl.textContent.substr(logEl.textContent.indexOf('\n') + 1);
+    const lines = logEl.textContent.split('\n');
+    const numLinesToRemove = lines.length - 1;
+    const newContent = lines.slice(numLinesToRemove).join('\n');
+    logEl.textContent = newContent;
   }
 });
 

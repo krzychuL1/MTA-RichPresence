@@ -1,17 +1,97 @@
-.przyciski{
-    height: 100px;
-    width: 780px;
+.sidebar-menu{
+  background-color: #EBEBEB;
+  text-align: center;
+  top: 120px;
+  left: 0;
+  width: 300px;
+  height: 400px;
+}
+
+.frakcje{
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.logh3{
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  position: relative;
+  top: -20px;
+}
+#log{
+  position: relative;
+  top: -30px;
+}
+.logidiv{
+  background-color: #EBEBEB;
+  position: fixed;
+  top: 120px;
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  text-align: center;
+  size: 20px;
+}
+#status-reset{
+  background-color: #BFBFBF;
+  padding: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  position: fixed;
+  left: 43%;
+  top: 25%;
+}
+#status-reset:active{
+  transform: translateY(2px);
+}
+#status-reset:hover{
+  background-color: #ADADAD;
+}
+#clear-log-btn{
+  background-color: #BFBFBF;
+  padding: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  position: fixed;
+  left: 43.8%;
+  top: 33%;
   }
-  .pasek {
-    position: fixed;
-    top: 37%;
-    height: 2px;
-    width: 100%;
-    background-color: black; 
-  }
-  .logi{
-    text-align: center;
-    size: 20px;
-  }
+#clear-log-btn:active{
+  transform: translateY(2px);
+}
+#clear-log-btn:hover{
+  background-color: #ADADAD;
+}
+#set-status-button{
+  background-color: #BFBFBF;
+  padding: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  transform: translateY(2px);
+}
+#set-status-button:active{
+  transform: translateY(4px);
+}
+#set-status-button:hover{
+  background-color: #ADADAD;
+}
+#set-status-button2{
+  background-color: #BFBFBF;
+  padding: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  transform: translateY(2px);
+}
+#set-status-button2:hover{
+  background-color: #ADADAD;
+}
+#set-status-button2:active{
+  transform: translateY(4px);
+}
 
   
