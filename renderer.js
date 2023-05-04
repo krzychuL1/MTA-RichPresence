@@ -57,6 +57,22 @@ setStatusButton3.addEventListener('click', () => {
  ipcRenderer.send('set-status3', status3);
 });
 
+const setStatusButton4 = document.getElementById('set-status-button4');
+const statusTextDetails = document.getElementById('custom-status-details');
+const statusTextState = document.getElementById('custom-status-state');
+
+setStatusButton4.addEventListener('click', () => {
+ const statusState = statusTextState.value;
+ const statusDetails = statusTextDetails.value;
+ const logEl = document.getElementById('log');
+
+ if (!statusState || !statusDetails) {
+  logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
+  return;
+}
+ ipcRenderer.send('set-status4', statusDetails, statusState);
+});
+
 const resetStatusButton = document.getElementById('status-reset');
 
 // Obsługa kliknięcia przycisku

@@ -73,19 +73,18 @@
           </div>  
       
           <!-- Własny status -->
-
-          <div style="display: none;" class="sidebar-items" id="sidebar-items-custom">
-            <h3 class="frakcje">Własny status</h3>
-            <p style="text-align: center;">Tutaj będzie opcja</p>
-            <p style="text-align: center;">do ustawiania własnych statusów.</p>
-          </div>
                     
-    <!--  <div style="display: none;" class="sidebar-items" id="sidebar-items-custom">
+    <div style="display: none;" class="sidebar-items" id="sidebar-items-custom">
         <h3 class="frakcje">Własny Status</h3>
-        <input type="text" value="ta">
+        <label for="custom-status-details">Details</label><br>
+        <input id="custom-status-details" type="text" required><br><br>
+        <label for="custom-status-state">State</label><br>
+        <input id="custom-status-state" type="text" required><br>
+        <input type="submit" name="" id="set-status-button4" value="Ustaw Własny status">
         <br>
-        <button id="set-status-button4">Ustaw Własny status</button><br></br>
-      </div> -->
+        <h4>Oznaczenie pól</h4>
+        <img id="status_help" src="img/status_help.png">
+      </div>
 
   <button id="status-reset">Zresetuj status</button>
   <button id="clear-log-btn">Wyczyść log</button>

@@ -77,6 +77,11 @@
   text-align: center;
   size: 20px;
 }
+#status_help{
+  position: relative;
+  left: 5px;
+  top: 0px;
+}
 #status-reset{
   background-color: #BFBFBF;
   padding: 10px;
@@ -154,6 +159,21 @@
   transform: translateY(4px);
 }
 #set-status-button3:hover{
+  background-color: #ADADAD;
+}
+#set-status-button4{
+  background-color: #BFBFBF;
+  padding: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  transform: translateY(2px);
+}
+#set-status-button4:active{
+  transform: translateY(4px);
+}
+#set-status-button4:hover{
   background-color: #ADADAD;
 }
 
