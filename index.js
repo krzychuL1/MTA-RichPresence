@@ -100,7 +100,6 @@ ipcMain.on('reset-rpc-status', () => {
   currentStatus = null;
   currentStatus2 = null;
   currentStatus3 = null;
-  customStatusDetails = null;
   if (win.logsSent.isRunning == true) {
 setRichPresence();
 win.webContents.send('log', `Status został zresetowany! ✅`);
@@ -621,12 +620,7 @@ ipcMain.on('set-status3', (event, status3) => {
   }
 });
 
-let customStatusDetails = null;
 ipcMain.on('set-status4', (event, statusDetails, statusState) => {
-  if (customStatusDetails === statusDetails) {
-    win.webContents.send('log', `Status jest już ustawiony! ❌`);
-    return;
-  }
   const data = Date.now()
         if (win.logsSent.isRunning == true) {
         rpc.setActivity({
@@ -636,7 +630,6 @@ ipcMain.on('set-status4', (event, statusDetails, statusState) => {
           instance: false,
           startTimestamp: data,
         });
-        customStatusDetails = statusDetails;
         currentStatus3 = null;
         currentStatus2 = null;
         currentStatus = null;
