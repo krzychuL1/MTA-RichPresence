@@ -50,9 +50,9 @@ function createWindow() {
       },
     });
 
-   //win.removeMenu();
+   win.removeMenu();
   win.webContents.on('devtools-opened', () => {
-   //win.webContents.closeDevTools();
+   win.webContents.closeDevTools();
   });
 
   win.webContents.on('before-input-event', (event, input) => {
@@ -691,7 +691,7 @@ app.whenReady().then(() => {
   createWindow();
 
   // Sprawdzanie aktualizacji
-  //autoUpdater.checkForUpdates();
+  autoUpdater.checkForUpdates();
 
   autoUpdater.on('update-downloaded', (info) => {
     autoUpdater.quitAndInstall();  
