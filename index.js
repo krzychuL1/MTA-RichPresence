@@ -1,8 +1,11 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const path = require('path');
+const fs = require('fs');
 const ps = require('ps-node');
 const DiscordRPC = require('discord-rpc');
 const { autoUpdater } = require('electron-updater')
 const Gamedig = require('gamedig');
+const { log } = require('console');
 
 autoUpdater.autoDownload = true;
 autoUpdater.autoInstallOnAppQuit = false;
@@ -18,7 +21,21 @@ Object.defineProperty(app, 'isPackaged', {
     app.quit();
   }
 
+
+  function AppVersion() {
+    const packagePath = path.join(app.getAppPath(), 'package.json');
+    const packageContent = fs.readFileSync(packagePath);
+    const packageJson = JSON.parse(packageContent);
+    return packageJson.version;
+  }
+
+
+
 let rpc;
+
+function sendStatusToWindow(text) {
+  win.webContents.send('message', text);
+}
 
 function createWindow() {
     win = new BrowserWindow({
@@ -33,9 +50,9 @@ function createWindow() {
       },
     });
 
-   win.removeMenu();
+   //win.removeMenu();
   win.webContents.on('devtools-opened', () => {
-   win.webContents.closeDevTools();
+   //win.webContents.closeDevTools();
   });
 
   win.webContents.on('before-input-event', (event, input) => {
@@ -46,10 +63,19 @@ function createWindow() {
   
     win.loadFile('index.html');
 
+    ipcMain.on('app-version', (event) => {
+      const version = AppVersion();
+      // Wysyłanie odpowiedzi na zapytanie o wersję do procesu renderera
+      event.sender.send('got-app-version', version);
+    });
   
     // Dodaj właściwość logsSent do obiektu win
     win.logsSent = {};
     return win;
+  }
+
+  function updatelog(text) {
+    win.webContents.send('update', text);
   }
 
 function checkProcess() {
@@ -240,21 +266,10 @@ app.whenReady().then(() => {
   createWindow();
 
   // Sprawdzanie aktualizacji
-  autoUpdater.checkForUpdates();
+  //autoUpdater.checkForUpdates();
 
-  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    const dialogOpts = {
-      type: 'question',
-      buttons: ['Restart', 'Później'],
-      title: 'Aktualizacja aplikacji.',
-      message: process.platform === 'win32' ? releaseNotes : releaseName,
-      detail:
-        'Nowa wersja została pobrana. Czy chcesz zrestartować aplikację aby ją zainstalować?',
-    }
-  
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      if (returnValue.response === 0) autoUpdater.quitAndInstall()
-    })
+  autoUpdater.on('update-downloaded', (info) => {
+    autoUpdater.quitAndInstall();  
   })
 
   win.webContents.on('did-finish-load', () => {

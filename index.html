@@ -3,13 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/3b0f0374a9.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <h1 style="text-align: center; size: 50px; font-family: Impact, Haettenschweiler, sans-serif;">MTA Discord Rich Presence 4Life Edition</h1>
-  <p style="text-align: center; size: 15px">Wersja 1.0.1</p>
-
-        <div class="sidebar-menu">
-   <h3 class="frakcje">Frakcje i Biznesy</h3>
+  <p style="text-align: center; size: 15px" id="wersja"></p>
+          <div class="sidebar">
+            <div>
+             <button onclick="frakcje()" id="frakcje-biznesy"><i class="fa-solid fa-briefcase" style="color: #000000;"></i></button>
+            </div>
+            <div>
+              <button onclick="prace()" id="prace"><i class="fa-solid fa-person-digging" style="color: #000000;"></i></button>
+             </div>
+          </div>
+          <div class="sidebar-items" id="sidebar-items-frakcje">
+        <h3 class="frakcje">Frakcje i Biznesy</h3>
         <select id="status-select">
             <option value="San Andreas Police Department">San Andreas Police Department</option>
             <option value="San Andreas Road Assistance">San Andreas Road Assistance</option>
@@ -22,10 +30,17 @@
             <option value="41.St Mechanized Infantry Division">41.St Mechanized Infantry Division</option>
         </select><br>
         <button id="set-status-button2">Ustaw Status Biznesowy</button><br>
-
-        </div>
-
-
+      </div>
+      <div style="display: none;" class="sidebar-items" id="sidebar-items-prace">
+        <h3 class="frakcje">Prace</h3>
+        <select id="status-select">
+            <option value="San Andreas Police Department">Kopalnia</option>
+            <option value="San Andreas Road Assistance">Kurier</option>
+            <option value="Transport of San Andreas">Transport of San Andreas</option>
+        </select>
+        <br>
+        <button id="set-status-button">Ustaw Status Prac</button><br></br>
+      </div>
   <button id="status-reset">Zresetuj status</button>
   <button id="clear-log-btn">Wyczyść log</button>
   <div class="logidiv">
@@ -35,69 +50,17 @@
   <div id="status" style="position: fixed; bottom: 10px; right: 10px;"></div>
   <div style="position: fixed; bottom: 10px; left: 10px; font-size: 12px;">Stworzone przez: KrzychuL_</div>
 
-  <script>
-const { ipcRenderer } = require('electron');
-const MAX_LOG_LENGTH = 460; // maksymalna długość loga
+<script src="renderer.js"></script>
+<script>
+  function frakcje() {
+  document.getElementById("sidebar-items-prace").style.display = "none";
+  document.getElementById("sidebar-items-frakcje").style.display = "block";
+}
 
-const logEl = document.getElementById('log');
-
-// nasłuchiwanie na kliknięcie przycisku "Wyczyść log"
-const clearLogBtn = document.getElementById('clear-log-btn');
-clearLogBtn.addEventListener('click', () => {
-  logEl.textContent = '';
-});
-
-ipcRenderer.on('log', (event, data) => {
-  logEl.textContent += data + '\n';
-
-  // usuń starsze wpisy, kiedy długość tekstu przekroczy MAX_LOG_LENGTH
-  if (logEl.textContent.length > MAX_LOG_LENGTH) {
-    const lines = logEl.textContent.split('\n');
-    const numLinesToRemove = lines.length - 1;
-    const newContent = lines.slice(numLinesToRemove).join('\n');
-    logEl.textContent = newContent;
-  }
-});
-
-
-
-    const setStatusButton = document.getElementById('set-status-button');
-   const statusSelect = document.getElementById('status-select');
-
-  setStatusButton.addEventListener('click', () => {
-    const status = statusSelect.value;
-    ipcRenderer.send('set-status', status);
-});
-
-const setStatusButton2 = document.getElementById('set-status-button2');
-   const statusSelect2 = document.getElementById('status-select2');
-
-  setStatusButton2.addEventListener('click', () => {
-    const status2 = statusSelect2.value;
-    ipcRenderer.send('set-status2', status2);
-});
-
-const resetStatusButton = document.getElementById('status-reset');
-
-// Obsługa kliknięcia przycisku
-resetStatusButton.addEventListener('click', () => {
-  // Wysłanie zdarzenia do procesu głównego z prośbą o zmianę statusu Discord RPC
-  ipcRenderer.send('reset-rpc-status');
-});
-
-const statusEl = document.getElementById('status');
-  let frame = 0;
-  const frames = ['Aplikacja działa.', 'Aplikacja działa..', 'Aplikacja działa...', 'Aplikacja działa.'];
-  statusEl.textContent = frames[frame];
-
-  // Definicja funkcji zmieniającej ramkę animacji
-  const nextFrame = () => {
-    frame = (frame + 1) % frames.length;
-    statusEl.textContent = frames[frame];
-  };
-
-  // Uruchomienie animacji z prędkością 500ms na ramkę
-  const intervalId = setInterval(nextFrame, 500);
-  </script>
+function prace() {
+  document.getElementById("sidebar-items-prace").style.display = "block";
+  document.getElementById("sidebar-items-frakcje").style.display = "none";
+}
+</script>
 </body>
 </html>

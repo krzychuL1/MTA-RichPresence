@@ -1,10 +1,45 @@
-.sidebar-menu{
+.sidebar-items{
   background-color: #EBEBEB;
   text-align: center;
   top: 120px;
   left: 0;
   width: 300px;
   height: 400px;
+  opacity: 1;
+}
+.sidebar{
+  top: 120px;
+  position: fixed;
+  background-color: #A4A4A4;
+  width: 30px;
+  height: 400px;
+}
+#frakcje-biznesy{
+  height: 30px;
+  width: 30px;
+  background-color: #BFBFBF;
+  padding: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+#frakcje-biznesy:hover{
+  background-color: #ADADAD;
+}
+
+#prace{
+  position: fixed;
+  top: 155px;
+  height: 30px;
+  width: 30px;
+  background-color: #BFBFBF;
+  padding: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+#prace:hover{
+  background-color: #ADADAD;
 }
 
 .frakcje{
