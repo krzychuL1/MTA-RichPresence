@@ -50,9 +50,9 @@ function createWindow() {
       },
     });
 
-   //win.removeMenu();
+   win.removeMenu();
   win.webContents.on('devtools-opened', () => {
-   //win.webContents.closeDevTools();
+   win.webContents.closeDevTools();
   });
 
   win.webContents.on('before-input-event', (event, input) => {
@@ -107,8 +107,10 @@ win.webContents.send('log', `Status został zresetowany! ✅`);
 }
 });
 
-let currentStatus2 = null;
 let currentStatus = null;
+let currentStatus2 = null;
+let currentStatus3 = null;
+
 
     ipcMain.on('set-status2', (event, status2) => {
       if (currentStatus2 === status2) {
@@ -127,8 +129,9 @@ let currentStatus = null;
                 instance: false,
                 startTimestamp: data,
               });
-              currentStatus2 = status2;
               currentStatus = null;
+              currentStatus2 = status2;
+              currentStatus3 = null;
               win.webContents.send('log', `Status "${status2}"
               został ustawiony! ✅`);
             } else {
@@ -144,14 +147,141 @@ let currentStatus = null;
               instance: false,
               startTimestamp: data,
             });
-            currentStatus2 = status2;
             currentStatus = null;
+            currentStatus2 = status2;
+            currentStatus3 = null;
             win.webContents.send('log', `Status "${status2}"
             został ustawiony! ✅`);
           } else {
             win.webContents.send('log', 'MTA jest wyłączone! ❌');
           }
               break;
+            case 'Studio Filmowe 4Life':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `• Biznes`,
+              state: `• ${status2}`,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus = null;
+            currentStatus2 = status2;
+            currentStatus3 = null;
+            win.webContents.send('log', `Status "${status2}"
+            został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+              break;
+            case '4FIGHT':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `• Biznes`,
+              state: `• ${status2}`,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus = null;
+            currentStatus2 = status2;
+            currentStatus3 = null;
+            win.webContents.send('log', `Status "${status2}"
+            został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+              break;
+            case 'YourCrazyWheel':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `• Biznes`,
+              state: `• ${status2}`,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus = null;
+            currentStatus2 = status2;
+            currentStatus3 = null;
+            win.webContents.send('log', `Status "${status2}"
+            został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+            break;
+            case 'Gold Car Leasing':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `• Biznes`,
+              state: `• ${status2}`,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus = null;
+            currentStatus2 = status2;
+            currentStatus3 = null;
+            win.webContents.send('log', `Status "${status2}"
+            został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+            break;
+            case '4Wars':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `• Biznes`,
+              state: `• ${status2}`,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus = null;
+            currentStatus2 = status2;
+            currentStatus3 = null;
+            win.webContents.send('log', `Status "${status2}"
+            został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+            break;
+            case '4Life Cinema Center':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `• Biznes`,
+              state: `• ${status2}`,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus = null;
+            currentStatus2 = status2;
+            currentStatus3 = null;
+            win.webContents.send('log', `Status "${status2}"
+            został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+            break;
+            case 'Crime N’ Shine':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `• Biznes`,
+              state: `• ${status2}`,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus = null;
+            currentStatus2 = status2;
+            currentStatus3 = null;
+            win.webContents.send('log', `Status "${status2}"
+            został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+            break;
           default:
               console.error(`Nieznany status: ${status2}`);
       }
@@ -176,6 +306,7 @@ ipcMain.on('set-status', (event, status) => {
         });
         currentStatus = status;
         currentStatus2 = null;
+        currentStatus3 = null;
         win.webContents.send('log', `Status "${status}"
         został ustawiony! ✅`);
       } else {
@@ -193,6 +324,7 @@ ipcMain.on('set-status', (event, status) => {
         });
         currentStatus = status;
         currentStatus2 = null;
+        currentStatus3 = null;
         win.webContents.send('log', `Status "${status}"
         został ustawiony! ✅`);
       } else {
@@ -210,6 +342,43 @@ ipcMain.on('set-status', (event, status) => {
         });
         currentStatus = status;
         currentStatus2 = null;
+        currentStatus3 = null;
+        win.webContents.send('log', `Status "${status}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+          case 'San Andreas Fire Department':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Frakcja`,
+          state: `• ${status}`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus = status;
+        currentStatus2 = null;
+        currentStatus3 = null;
+        win.webContents.send('log', `Status "${status}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+          case 'San Andreas Medical Department':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Frakcja`,
+          state: `• ${status}`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus = status;
+        currentStatus2 = null;
+        currentStatus3 = null;
         win.webContents.send('log', `Status "${status}"
         został ustawiony! ✅`);
       } else {
@@ -218,6 +387,235 @@ ipcMain.on('set-status', (event, status) => {
           break;
       default:
           console.error(`Nieznany status: ${status}`);
+  }
+});
+
+ipcMain.on('set-status3', (event, status3) => {
+  if (currentStatus3 === status3) {
+    win.webContents.send('log', `Status "${status3}" 
+    jest już ustawiony! ❌`);
+    return;
+  }
+  const data = Date.now()
+  switch (status3) {
+      case 'Kopalnia':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Praca: ${status3}`,
+          state: `• Kopie węgiel`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus3 = status3;
+        currentStatus2 = null;
+        currentStatus = null;
+        win.webContents.send('log', `Status "${status3}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+      case 'Kurier':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Praca: ${status3}`,
+          state: `• Roznosi paczki`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus3 = status3;
+        currentStatus2 = null;
+        currentStatus = null;
+        win.webContents.send('log', `Status "${status3}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+          case 'Lawety':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Praca: ${status3}`,
+          state: `• Przewozi kontenery`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus3 = status3;
+        currentStatus2 = null;
+        currentStatus = null;
+        win.webContents.send('log', `Status "${status3}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+          case 'Magazynier':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Praca: ${status3}`,
+          state: `• Przenosi paczki`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus3 = status3;
+        currentStatus2 = null;
+        currentStatus = null;
+        win.webContents.send('log', `Status "${status3}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+        case 'Trans-Max nie legalna':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Praca: ${status3}`,
+          state: `• Przewozi nie legalne towary`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus3 = status3;
+        currentStatus2 = null;
+        currentStatus = null;
+        win.webContents.send('log', `Status "${status3}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+        case 'Sweeper':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Praca: ${status3}`,
+          state: `• Sprząta ulice`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus3 = status3;
+        currentStatus2 = null;
+        currentStatus = null;
+        win.webContents.send('log', `Status "${status3}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+          case 'Kosiarki':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Praca: ${status3}`,
+          state: `• Kosi trawę`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus3 = status3;
+        currentStatus2 = null;
+        currentStatus = null;
+        win.webContents.send('log', `Status "${status3}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+          case 'Dodo':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Praca: ${status3}`,
+          state: `• Zrzuca paczki`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus3 = status3;
+        currentStatus2 = null;
+        currentStatus = null;
+        win.webContents.send('log', `Status "${status3}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+          case 'Śmieciarki':
+        if (win.logsSent.isRunning == true) {
+        rpc.setActivity({
+          details: `• Praca: ${status3}`,
+          state: `• Zbiera śmieci`,
+          largeImageKey: 'mta',
+          instance: false,
+          startTimestamp: data,
+        });
+        currentStatus3 = status3;
+        currentStatus2 = null;
+        currentStatus = null;
+        win.webContents.send('log', `Status "${status3}"
+        został ustawiony! ✅`);
+      } else {
+        win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      }
+          break;
+          case 'eTransporter':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `• Praca: ${status3}`,
+              state: `• Przewozi pasażerów`,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus3 = status3;
+            currentStatus2 = null;
+            currentStatus = null;
+            win.webContents.send('log', `Status "${status3}"
+            został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+              break;
+              case 'Odśnieżarki':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `• Praca: ${status3}`,
+              state: `• Odśnieża drogi`,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus3 = status3;
+            currentStatus2 = null;
+            currentStatus = null;
+            win.webContents.send('log', `Status "${status3}"
+            został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+              break;
+            case 'Nurek':
+            if (win.logsSent.isRunning == true) {
+            rpc.setActivity({
+              details: `• Praca: ${status3}`,
+              state: `• Zbiera śmieci z wody`,
+              largeImageKey: 'mta',
+              instance: false,
+              startTimestamp: data,
+            });
+            currentStatus3 = status3;
+            currentStatus2 = null;
+            currentStatus = null;
+            win.webContents.send('log', `Status "${status3}"
+            został ustawiony! ✅`);
+          } else {
+            win.webContents.send('log', 'MTA jest wyłączone! ❌');
+          }
+              break;
+      default:
+          console.error(`Nieznany status: ${status3}`);
   }
 });
 
@@ -266,7 +664,7 @@ app.whenReady().then(() => {
   createWindow();
 
   // Sprawdzanie aktualizacji
-  //autoUpdater.checkForUpdates();
+  autoUpdater.checkForUpdates();
 
   autoUpdater.on('update-downloaded', (info) => {
     autoUpdater.quitAndInstall();  

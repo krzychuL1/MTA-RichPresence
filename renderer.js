@@ -49,6 +49,14 @@ const setStatusButton2 = document.getElementById('set-status-button2');
     ipcRenderer.send('set-status2', status2);
 });
 
+const setStatusButton3 = document.getElementById('set-status-button3');
+const statusSelect3 = document.getElementById('status-select3');
+
+setStatusButton3.addEventListener('click', () => {
+ const status3 = statusSelect3.value;
+ ipcRenderer.send('set-status3', status3);
+});
+
 const resetStatusButton = document.getElementById('status-reset');
 
 // Obsługa kliknięcia przycisku

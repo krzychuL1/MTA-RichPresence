@@ -15,32 +15,78 @@
             <div>
               <button onclick="prace()" id="prace"><i class="fa-solid fa-person-digging" style="color: #000000;"></i></button>
              </div>
-          </div>
+             <div>
+              <button onclick="custom()" id="custom"><i class="fa-regular fa-keyboard" style="color: #000000;"></i></button>
+             </div>
+           </div>
+
+          <!-- Frakcje i biznesy -->
+
           <div class="sidebar-items" id="sidebar-items-frakcje">
         <h3 class="frakcje">Frakcje i Biznesy</h3>
         <select id="status-select">
             <option value="San Andreas Police Department">San Andreas Police Department</option>
+            <option value="San Andreas Fire Department">San Andreas Fire Department</option>
+            <option value="San Andreas Medical Department">San Andreas Medical Department</option>
             <option value="San Andreas Road Assistance">San Andreas Road Assistance</option>
             <option value="Transport of San Andreas">Transport of San Andreas</option>
         </select>
         <br>
         <button id="set-status-button">Ustaw Status Frakcyjny</button><br></br>
         <select id="status-select2">
-            <option value="Buildings4you">Buildings4you</option>
+            <option value="Studio Filmowe 4Life">Studio Filmowe 4Life</option>
+            <option value="4FIGHT">4FIGHT</option>
+            <option value="YourCrazyWheel">YourCrazyWheel</option>
+            <option value="Gold Car Leasing">Gold Car Leasing</option>
             <option value="41.St Mechanized Infantry Division">41.St Mechanized Infantry Division</option>
+            <option value="Buildings4you">Buildings4you</option>
+            <option value="4Wars">4Wars</option>
+            <option value="4Life Cinema Center">4Life Cinema Center</option>
+            <option value="Crime N’ Shine">Crime N’ Shine</option>
+
         </select><br>
         <button id="set-status-button2">Ustaw Status Biznesowy</button><br>
       </div>
-      <div style="display: none;" class="sidebar-items" id="sidebar-items-prace">
-        <h3 class="frakcje">Prace</h3>
-        <select id="status-select">
-            <option value="San Andreas Police Department">Kopalnia</option>
-            <option value="San Andreas Road Assistance">Kurier</option>
-            <option value="Transport of San Andreas">Transport of San Andreas</option>
-        </select>
+      
+          <!-- Prace -->
+
+          <div style="display: none;" class="sidebar-items" id="sidebar-items-prace">
+            <h3 class="frakcje">Prace</h3>
+            <select id="status-select3">
+                <option value="Lawety">Lawety</option>
+                <option value="Kurier">Kurier</option>
+                <option value="Magazynier">Magazynier</option>
+                <option value="Trans-Max nie legalna">Trans-Max (Nielegalna)</option>
+                <option value="Sweeper">Sweeper</option>
+                <option value="Kopalnia">Kopalnia</option>
+                <option value="Kosiarki">Kosiarki</option>
+                <option value="Dodo">Dodo</option>
+                <option value="Śmieciarki">Śmieciarki</option>
+                <option value="eTransporter">eTransporter</option>
+                <option value="Odśnieżarki">Odśnieżarki</option>
+                <option value="Nurek">Nurek</option>
+
+            </select>
+            <br>
+            <button id="set-status-button3">Ustaw Status Prac</button><br></br>
+
+          </div>  
+      
+          <!-- Własny status -->
+
+          <div style="display: none;" class="sidebar-items" id="sidebar-items-custom">
+            <h3 class="frakcje">Własny status</h3>
+            <p style="text-align: center;">Tutaj będzie opcja</p>
+            <p style="text-align: center;">do ustawiania własnych statusów.</p>
+          </div>
+                    
+    <!--  <div style="display: none;" class="sidebar-items" id="sidebar-items-custom">
+        <h3 class="frakcje">Własny Status</h3>
+        <input type="text" value="ta">
         <br>
-        <button id="set-status-button">Ustaw Status Prac</button><br></br>
-      </div>
+        <button id="set-status-button4">Ustaw Własny status</button><br></br>
+      </div> -->
+
   <button id="status-reset">Zresetuj status</button>
   <button id="clear-log-btn">Wyczyść log</button>
   <div class="logidiv">
@@ -54,12 +100,20 @@
 <script>
   function frakcje() {
   document.getElementById("sidebar-items-prace").style.display = "none";
+  document.getElementById("sidebar-items-custom").style.display = "none";
   document.getElementById("sidebar-items-frakcje").style.display = "block";
 }
 
 function prace() {
   document.getElementById("sidebar-items-prace").style.display = "block";
   document.getElementById("sidebar-items-frakcje").style.display = "none";
+  document.getElementById("sidebar-items-custom").style.display = "none";
+}
+
+function custom() {
+  document.getElementById("sidebar-items-prace").style.display = "none";
+  document.getElementById("sidebar-items-frakcje").style.display = "none";
+  document.getElementById("sidebar-items-custom").style.display = "block";
 }
 </script>
 </body>

@@ -2,7 +2,6 @@
   background-color: #EBEBEB;
   text-align: center;
   top: 120px;
-  left: 0;
   width: 300px;
   height: 400px;
   opacity: 1;
@@ -39,6 +38,20 @@
   border: none;
 }
 #prace:hover{
+  background-color: #ADADAD;
+}
+#custom{
+  position: fixed;
+  top: 190px;
+  height: 30px;
+  width: 30px;
+  background-color: #BFBFBF;
+  padding: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+#custom:hover{
   background-color: #ADADAD;
 }
 
@@ -127,6 +140,21 @@
 }
 #set-status-button2:active{
   transform: translateY(4px);
+}
+#set-status-button3{
+  background-color: #BFBFBF;
+  padding: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  transform: translateY(2px);
+}
+#set-status-button3:active{
+  transform: translateY(4px);
+}
+#set-status-button3:hover{
+  background-color: #ADADAD;
 }
 
   
