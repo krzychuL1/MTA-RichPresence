@@ -73,6 +73,33 @@ setStatusButton4.addEventListener('click', () => {
  ipcRenderer.send('set-status4', statusDetails, statusState);
 });
 
+const setButton = document.getElementById('set-button-buttons');
+const resetButton = document.getElementById('reset-button-buttons');
+const statusNazwa1 = document.getElementById('status-button-name1');
+const statusLink1 = document.getElementById('custom-status-link1');
+const statusNazwa2 = document.getElementById('status-button-name2');
+const statusLink2 = document.getElementById('custom-status-link2');
+
+setButton.addEventListener('click', () => {
+ const Nazwa1 = statusNazwa1.value;
+ const Link1 = statusLink1.value;
+ const Link2 = statusLink2.value;
+ const Nazwa2 = statusNazwa2.value;
+
+ const logEl = document.getElementById('log');
+
+ if (!Nazwa1 || !Link1 || !Link2 || !Nazwa2) {
+  logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
+  return;
+}
+ ipcRenderer.send('set-button', Nazwa1, Link1, Link2, Nazwa2);
+});
+
+resetButton.addEventListener('click', () => {
+  ipcRenderer.send('reset-button');
+});
+
+
 const resetStatusButton = document.getElementById('status-reset');
 
 // Obsługa kliknięcia przycisku
@@ -94,3 +121,47 @@ const statusEl = document.getElementById('status');
 
   // Uruchomienie animacji z prędkością 500ms na ramkę
   const intervalId = setInterval(nextFrame, 500);
+
+  const notification = document.getElementById('notification');
+  const message = document.getElementById('message');
+  
+  // Nasłuchiwanie na zmiany w procesie pobierania aktualizacji
+  const updateProgress = document.getElementById('update-progress');
+  ipcRenderer.on('update_progress', (event, percent) => {
+    updateProgress.innerText = `Pobrano ${percent}%`;
+  });
+  
+  ipcRenderer.on('update_available', () => {
+    ipcRenderer.removeAllListeners('update_available');
+    message.innerText = 'Pobieranie aktualizacji';
+    notification.classList.remove('hidden');
+  });
+
+  
+  function frakcje() {
+    document.getElementById("sidebar-items-prace").style.display = "none";
+    document.getElementById("sidebar-items-custom").style.display = "none";
+    document.getElementById("sidebar-items-przyciski").style.display = "none";
+    document.getElementById("sidebar-items-frakcje").style.display = "block";
+  }
+  
+  function prace() {
+    document.getElementById("sidebar-items-prace").style.display = "block";
+    document.getElementById("sidebar-items-frakcje").style.display = "none";
+    document.getElementById("sidebar-items-custom").style.display = "none";
+    document.getElementById("sidebar-items-przyciski").style.display = "none";
+  }
+  
+  function custom() {
+    document.getElementById("sidebar-items-prace").style.display = "none";
+    document.getElementById("sidebar-items-frakcje").style.display = "none";
+    document.getElementById("sidebar-items-przyciski").style.display = "none";
+    document.getElementById("sidebar-items-custom").style.display = "block";
+  }
+
+  function przyciski() {
+    document.getElementById("sidebar-items-prace").style.display = "none";
+    document.getElementById("sidebar-items-frakcje").style.display = "none";
+    document.getElementById("sidebar-items-custom").style.display = "none";
+    document.getElementById("sidebar-items-przyciski").style.display = "block";
+  }

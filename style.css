@@ -54,6 +54,20 @@
 #custom:hover{
   background-color: #ADADAD;
 }
+#przyciski{
+  position: fixed;
+  top: 225px;
+  height: 30px;
+  width: 30px;
+  background-color: #BFBFBF;
+  padding: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+#przyciski:hover{
+  background-color: #ADADAD;
+}
 
 .frakcje{
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -176,5 +190,51 @@
 #set-status-button4:hover{
   background-color: #ADADAD;
 }
-
+#set-button-buttons{
+  position: relative;
+  bottom: 10px;
+  background-color: #BFBFBF;
+  padding: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  transform: translateY(2px);
+}
+#set-button-buttons:active{
+  transform: translateY(4px);
+}
+#set-button-buttons:hover{
+  background-color: #ADADAD;
+}
+#reset-button-buttons{
+  position: relative;
+  bottom: 10px;
+  background-color: #BFBFBF;
+  padding: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  transform: translateY(2px);
+}
+#reset-button-buttons:active{
+  transform: translateY(4px);
+}
+#reset-button-buttons:hover{
+  background-color: #ADADAD;
+}
+#notification {
+  position: fixed;
+  bottom: 20px;
+  left: 35%;
+  width: 200px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.hidden {
+  display: none;
+}
   
