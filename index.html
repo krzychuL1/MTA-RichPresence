@@ -95,16 +95,16 @@
         
    <div style="display: none;" class="sidebar-items" id="sidebar-items-przyciski">
       <h3 class="frakcje">Przyciski</h3>
-      <h4 style="text-align: center;">Pierwszy Przycisk</h4>
+      <label for="select-button-ilosc">Ilość przycisków</label>
+      <select id="select-button-ilosc" name="select">
+      <option value="1" selected>1</option>
+      <option value="2">2</option>
+      </select><br>
       <label for="status-button-name1">Nazwa</label><br>
       <input id="status-button-name1" type="text" required><br><br>
       <label for="status-button-link1">Link</label><br>
       <input id="custom-status-link1" type="text" required><br><br>
-      <h4 style="text-align: center;">Drugi Przycisk</h4>
-      <label for="status-button-name2">Nazwa</label><br>
-      <input id="status-button-name2" type="text" required><br><br>
-      <label for="status-button-link2">Link</label><br>
-      <input id="custom-status-link2" type="text" required><br><br>
+      <div id="drugie-button"></div>
       <input type="submit" name="" id="set-button-buttons" value="Ustaw przyciski">
       <input type="submit" name="" id="reset-button-buttons" value="Usuń przyciski">
     </div>

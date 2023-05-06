@@ -73,32 +73,6 @@ setStatusButton4.addEventListener('click', () => {
  ipcRenderer.send('set-status4', statusDetails, statusState);
 });
 
-const setButton = document.getElementById('set-button-buttons');
-const resetButton = document.getElementById('reset-button-buttons');
-const statusNazwa1 = document.getElementById('status-button-name1');
-const statusLink1 = document.getElementById('custom-status-link1');
-const statusNazwa2 = document.getElementById('status-button-name2');
-const statusLink2 = document.getElementById('custom-status-link2');
-
-setButton.addEventListener('click', () => {
- const Nazwa1 = statusNazwa1.value;
- const Link1 = statusLink1.value;
- const Link2 = statusLink2.value;
- const Nazwa2 = statusNazwa2.value;
-
- const logEl = document.getElementById('log');
-
- if (!Nazwa1 || !Link1 || !Link2 || !Nazwa2) {
-  logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
-  return;
-}
- ipcRenderer.send('set-button', Nazwa1, Link1, Link2, Nazwa2);
-});
-
-resetButton.addEventListener('click', () => {
-  ipcRenderer.send('reset-button');
-});
-
 
 const resetStatusButton = document.getElementById('status-reset');
 
@@ -126,6 +100,7 @@ const statusEl = document.getElementById('status');
   const message = document.getElementById('message');
   
   // Nasłuchiwanie na zmiany w procesie pobierania aktualizacji
+
   const updateProgress = document.getElementById('update-progress');
   ipcRenderer.on('update_progress', (event, percent) => {
     updateProgress.innerText = `Pobrano ${Math.floor(percent)}%`;
@@ -136,6 +111,67 @@ const statusEl = document.getElementById('status');
     ipcRenderer.removeAllListeners('update_available');
     message.innerText = 'Pobieranie aktualizacji';
     notification.classList.remove('hidden');
+  });
+
+
+const setButton = document.getElementById('set-button-buttons');
+const resetButton = document.getElementById('reset-button-buttons');
+const statusNazwa1 = document.getElementById('status-button-name1');
+const statusLink1 = document.getElementById('custom-status-link1');
+let statusNazwa2 = null;
+let statusLink2 = null;
+
+  const selectIlosc = document.getElementById('select-button-ilosc');
+  const drugieButton = document.getElementById('drugie-button');
+
+let option = null;
+
+  selectIlosc.addEventListener('change', (event) => {
+    
+    option = event.target.value;
+    if (option === '2') {
+      drugieButton.innerHTML = `
+        <h4 style="text-align: center;">Drugi Przycisk</h4>
+        <label for="status-button-name2">Nazwa</label><br>
+        <input id="status-button-name2" type="text" required><br><br>
+        <label for="status-button-link2">Link</label><br>
+        <input id="custom-status-link2" type="text" required><br><br>
+      `;
+      statusNazwa2 = document.getElementById('status-button-name2');
+      statusLink2 = document.getElementById('custom-status-link2');
+    } else {
+      drugieButton.innerHTML = '';
+    }
+  });
+
+  setButton.addEventListener('click', (event) => {
+    const logEl = document.getElementById('log');
+    if (option === '2') {
+      const Nazwa1 = statusNazwa1.value;
+      const Link1 = statusLink1.value;
+      const Link2 = statusLink2.value;
+      const Nazwa2 = statusNazwa2.value;
+
+      if (!Nazwa1 || !Link1 || !Link2 || !Nazwa2) {
+        logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
+        return;
+      }
+      ipcRenderer.send('set-button2', Nazwa1, Link1, Link2, Nazwa2);
+    } else {
+
+      const Nazwa1 = statusNazwa1.value;
+      const Link1 = statusLink1.value;
+
+      if (!Nazwa1 || !Link1) {
+        logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
+        return;
+      }
+      ipcRenderer.send('set-button1', Nazwa1, Link1);
+    }
+   });
+
+   resetButton.addEventListener('click', () => {
+    ipcRenderer.send('reset-button');
   });
 
   

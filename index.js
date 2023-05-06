@@ -754,7 +754,21 @@ ipcMain.on('set-status4', (event, statusDetails, statusState) => {
       }
 });
 
-ipcMain.on('set-button', (event, Nazwa1, Link1, Link2, Nazwa2) => {
+ipcMain.on('set-button1', (event, Nazwa1, Link1) => {
+  buttons = [
+    { label: Nazwa1, url: Link1 },
+  ];
+  if(win.logsSent.isRunning == true){
+    currentStatus = null;
+    currentStatus2 = null;
+    currentStatus3 = null;
+    win.webContents.send('log', 'Przyciski zostały ustawione! ✅\nTeraz wybierz swój status!');
+  } else {
+    win.webContents.send('log', 'MTA jest wyłączone! ❌');
+  }
+});
+
+ipcMain.on('set-button2', (event, Nazwa1, Link1, Link2, Nazwa2) => {
   buttons = [
     { label: Nazwa1, url: Link1 },
     { label: Nazwa2, url: Link2 },
@@ -830,9 +844,6 @@ app.whenReady().then(() => {
 
         // Sprawdzanie aktualizacji
         autoUpdater.checkForUpdates();
-        //win.once('ready-to-show', () => {
-        //  autoUpdater.checkForUpdatesAndNotify();
-        //});
       
       
         autoUpdater.on('update-available', () => {
@@ -844,7 +855,10 @@ app.whenReady().then(() => {
         win.webContents.send('update_progress', percent);
       });
       
-      autoUpdater.quitAndInstall()
+      autoUpdater.on('update-downloaded', (info) => {
+        autoUpdater.quitAndInstall()
+      });
+
 
   win.webContents.on('did-finish-load', () => {
     if (!win.logsSent.windowLoaded) {
