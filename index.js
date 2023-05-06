@@ -786,6 +786,9 @@ ipcMain.on('set-button2', (event, Nazwa1, Link1, Link2, Nazwa2) => {
 ipcMain.on('reset-button', (event) => {
   buttons = null
   if(win.logsSent.isRunning == true){
+    currentStatus = null;
+    currentStatus2 = null;
+    currentStatus3 = null;
     win.webContents.send('log', 'Przyciski zostały usunięte! ✅\nTeraz wybierz swój status!');
   } else {
     win.webContents.send('log', 'MTA jest wyłączone! ❌');
@@ -832,7 +835,9 @@ app.whenReady().then(() => {
       win.logsSent.richPresenceReady = true;
     }
     checkProcess();
+    sprawdzupdate();
     setInterval(checkProcess, 2000);
+    setInterval(autoupdate20min, 1200000);
 
   });
 
@@ -843,8 +848,16 @@ app.whenReady().then(() => {
 
 
         // Sprawdzanie aktualizacji
-        autoUpdater.checkForUpdates();
-      
+        function sprawdzupdate() {
+          autoUpdater.checkForUpdates();
+          win.webContents.send('log', 'Sprawdzanie aktualizacji');
+        }
+
+        function autoupdate20min() {
+          autoUpdater.checkForUpdates();
+          win.webContents.send('log', 'Sprawdzanie aktualizacji');
+        }
+        //autoUpdater.checkForUpdates();
       
         autoUpdater.on('update-available', () => {
           win.webContents.send('update_available');
