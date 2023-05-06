@@ -128,8 +128,9 @@ const statusEl = document.getElementById('status');
   // Nasłuchiwanie na zmiany w procesie pobierania aktualizacji
   const updateProgress = document.getElementById('update-progress');
   ipcRenderer.on('update_progress', (event, percent) => {
-    updateProgress.innerText = `Pobrano ${percent}%`;
+    updateProgress.innerText = `Pobrano ${Math.floor(percent)}%`;
   });
+  
   
   ipcRenderer.on('update_available', () => {
     ipcRenderer.removeAllListeners('update_available');
