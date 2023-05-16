@@ -202,3 +202,11 @@ let option = null;
     document.getElementById("sidebar-items-custom").style.display = "none";
     document.getElementById("sidebar-items-przyciski").style.display = "block";
   }
+
+  const updateNotification = document.getElementById('update-notification');
+  const updateMessage = document.getElementById('update-message');
+
+  ipcRenderer.on('update-changelog', (event, releaseNote) => {
+    updateMessage.innerText = releaseNote;
+    updateNotification.classList.remove('hidden');
+  });

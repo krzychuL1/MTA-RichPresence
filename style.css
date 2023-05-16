@@ -234,6 +234,16 @@
   background-color: #BFBFBF;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
+#update-notification {
+  position: fixed;
+  bottom: 50px;
+  left: 29%;
+  width: 300px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #BFBFBF;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
 .hidden {
   display: none;
 }

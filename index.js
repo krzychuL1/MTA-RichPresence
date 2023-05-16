@@ -3,10 +3,14 @@ const path = require('path');
 const fs = require('fs');
 const DiscordRPC = require('discord-rpc');
 const { autoUpdater } = require('electron-updater')
-//const { autoUpdater } = require('electron-differential-updater');
 const Gamedig = require('gamedig');
 const { log } = require('console');
+const sanitizeHtml = require('sanitize-html');
+const Store = require('electron-store');
+const store = new Store();
 const { spawn } = require('child_process');
+const find = require('find-process');
+
 
 autoUpdater.autoDownload = true;
 autoUpdater.autoInstallOnAppQuit = false;
@@ -47,9 +51,9 @@ function createWindow() {
       },
     });
 
-  win.removeMenu();
+  //win.removeMenu();
   win.webContents.on('devtools-opened', () => {
-  win.webContents.closeDevTools();
+  //win.webContents.closeDevTools();
   });
 
   win.webContents.on('before-input-event', (event, input) => {
@@ -68,25 +72,38 @@ function createWindow() {
   
     // Dodaj właściwość logsSent do obiektu win
     win.logsSent = {};
+
+
     return win;
   }
 
-function checkProcess() {
-  const process = spawn('tasklist', ['/fi', `imagename eq wow64_helper.exe`]);
+let isRunning = false;
+let dziala = false;
 
-  process.stdout.on('data', (data) => {
-    const output = data.toString();
-    if (output.indexOf('wow64_helper.exe') > -1 && !win.logsSent.isRunning) {
+async function checkProcess() {
+  try {
+    const processes = await find('name', 'wow64_helper.exe', true);
+
+    if (processes.length > 0 && !isRunning) {
+      console.log('MTA jest wlaczone');
       win.webContents.send('log', 'MTA jest włączone! ✅');
+      isRunning = true;
+      dziala = true
       win.logsSent.isRunning = true;
       setRichPresence();
-    } else if(output.indexOf('wow64_helper.exe') < -1 && win.logsSent.isRunning){
+    } else if (processes.length === 0 && isRunning || !dziala) {
+      console.log('MTA jest wylaczone');
       win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      dziala = true
+      isRunning = false;
       win.logsSent.isRunning = false;
       clearRichPresence();
     }
-  });
+  } catch (error) {
+    console.error('Error while checking process:', error);
+  }
 }
+  
 
 ipcMain.on('reset-rpc-status', () => {
   currentStatus = null;
@@ -834,17 +851,17 @@ app.whenReady().then(() => {
       win.webContents.send('log', 'Status Discord jest gotowy! ✅');
       win.logsSent.richPresenceReady = true;
     }
-    checkProcess();
-    sprawdzupdate();
-    setInterval(checkProcess, 2000);
-    setInterval(autoupdate20min, 1200000);
-
   });
 
   rpc.login({ clientId: '1081236894689538058' }).catch(console.error)
 
 
   createWindow();
+
+          
+        // Sprawdź update
+        sprawdzupdate();
+        //setInterval(autoupdate20min, 1200000);
 
 
         // Sprawdzanie aktualizacji
@@ -870,6 +887,8 @@ app.whenReady().then(() => {
       
       autoUpdater.on('update-downloaded', (info) => {
         autoUpdater.quitAndInstall()
+        store.set('newVersion', info.version);
+        store.set('releaseNotes', info.releaseNotes);
       });
 
 
@@ -879,6 +898,33 @@ app.whenReady().then(() => {
     win.logsSent.windowLoaded = true;
     }
     });
+    });
+
+    app.on('ready', () => {
+        // Sprawdź MTA
+        checkProcess();
+        //setTimeout(checkProcess, 2000)
+        setInterval(checkProcess, 5000);
+        const newVersion = store.get('newVersion');
+        const currentVersion = app.getVersion();
+        const releaseNotes = store.get('releaseNotes');
+
+        if (newVersion && newVersion !== currentVersion) {
+          const releaseNote = sanitizeHtml(releaseNotes, {
+            allowedTags: [],
+            allowedAttributes: {}
+          });
+        ipcMain.on('update-changelog', (event) => {
+          console.log(releaseNote)
+          event.sender.send('update-changelog', releaseNote);
+        });
+
+        
+        
+
+        //store.delete('newVersion');
+        //store.delete('releaseNotes');
+      }
     });
     
     // Obsługa zdarzenia zamykania aplikacji

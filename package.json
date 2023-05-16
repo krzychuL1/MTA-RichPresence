@@ -1,7 +1,7 @@
 {
   "name": "mta_richpresence",
   "productName": "MTA RichPresence",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "tak",
   "main": "index.js",
   "repository": {
@@ -43,12 +43,16 @@
     "electron-builder-squirrel-windows": "^24.0.0-alpha.8",
     "electron-differential-updater": "^4.3.2",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^8.1.0",
     "electron-updater": "^5.3.0",
+    "find-process": "^1.4.7",
     "fs": "^0.0.1-security",
     "gamedig": "^4.0.6",
     "http": "^0.0.1-security",
     "net": "^1.0.2",
     "path": "^0.12.7",
+    "sanitize-html": "^2.10.0",
+    "string-strip-html": "^8.4.0",
     "url": "^0.11.0"
   }
 }
