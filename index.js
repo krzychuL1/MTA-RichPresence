@@ -85,14 +85,14 @@ async function checkProcess() {
     const processes = await find('name', 'wow64_helper.exe', true);
 
     if (processes.length > 0 && !isRunning) {
-      console.log('MTA jest wlaczone');
+      //console.log('MTA jest wlaczone');
       win.webContents.send('log', 'MTA jest włączone! ✅');
       isRunning = true;
       dziala = true
       win.logsSent.isRunning = true;
       setRichPresence();
     } else if (processes.length === 0 && isRunning || !dziala) {
-      console.log('MTA jest wylaczone');
+      //console.log('MTA jest wylaczone');
       win.webContents.send('log', 'MTA jest wyłączone! ❌');
       dziala = true
       isRunning = false;
@@ -902,7 +902,7 @@ app.whenReady().then(() => {
 
     app.on('ready', () => {
         // Sprawdź MTA
-        checkProcess();
+        setTimeout(checkProcess, 1000)
         setInterval(checkProcess, 5000);
         const newVersion = store.get('newVersion');
         const currentVersion = app.getVersion();

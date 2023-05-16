@@ -132,10 +132,8 @@ let option = null;
     if (option === '2') {
       drugieButton.innerHTML = `
         <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
-        <label id="tekst" for="status-button-name2">Nazwa</label><br>
-        <input id="status-button-name2" type="text" required><br><br>
-        <label id="tekst" for="status-button-link2">Link</label><br>
-        <input id="custom-status-link2" type="text" required><br><br>
+        <input id="status-button-name2" type="text" placeholder="Nazwa" required><br><br>
+        <input id="custom-status-link2" type="text" placeholder="Link" required><br><br>
       `;
       statusNazwa2 = document.getElementById('status-button-name2');
       statusLink2 = document.getElementById('custom-status-link2');
@@ -202,3 +200,4 @@ let option = null;
     document.getElementById("sidebar-items-custom").style.display = "none";
     document.getElementById("sidebar-items-przyciski").style.display = "block";
   }
+  
