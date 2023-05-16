@@ -8,7 +8,6 @@ const { log } = require('console');
 const sanitizeHtml = require('sanitize-html');
 const Store = require('electron-store');
 const store = new Store();
-const { spawn } = require('child_process');
 const find = require('find-process');
 
 
@@ -117,6 +116,9 @@ win.webContents.send('log', `Status został zresetowany! ✅`);
 }
 });
 
+
+
+// 4LIFE
 let buttons = null;
 let currentStatus = null;
 let currentStatus2 = null;
@@ -367,6 +369,7 @@ let currentStatus3 = null;
       }
   });
 
+  // Frakcje
 ipcMain.on('set-status', (event, status) => {
   if (currentStatus === status) {
     win.webContents.send('log', `Status "${status}"\njest już ustawiony! ❌`);
@@ -484,6 +487,7 @@ ipcMain.on('set-status', (event, status) => {
   }
 });
 
+  // Prace
 ipcMain.on('set-status3', (event, status3) => {
   if (currentStatus3 === status3) {
     win.webContents.send('log', `Status "${status3}"\njest już ustawiony! ❌`);
@@ -748,6 +752,7 @@ ipcMain.on('set-status3', (event, status3) => {
   }
 });
 
+  // Własny status
 ipcMain.on('set-status4', (event, statusDetails, statusState) => {
   const data = Date.now()
         if (win.logsSent.isRunning == true) {
@@ -771,6 +776,9 @@ ipcMain.on('set-status4', (event, statusDetails, statusState) => {
       }
 });
 
+// Przyciski
+
+// 1 Przycisk
 ipcMain.on('set-button1', (event, Nazwa1, Link1) => {
   buttons = [
     { label: Nazwa1, url: Link1 },
@@ -785,6 +793,7 @@ ipcMain.on('set-button1', (event, Nazwa1, Link1) => {
   }
 });
 
+// 2 Przyciski
 ipcMain.on('set-button2', (event, Nazwa1, Link1, Link2, Nazwa2) => {
   buttons = [
     { label: Nazwa1, url: Link1 },
@@ -800,6 +809,7 @@ ipcMain.on('set-button2', (event, Nazwa1, Link1, Link2, Nazwa2) => {
   }
 });
 
+// Reset statusu
 ipcMain.on('reset-button', (event) => {
   buttons = null
   if(win.logsSent.isRunning == true){
@@ -901,29 +911,30 @@ app.whenReady().then(() => {
     });
 
     app.on('ready', () => {
-        // Sprawdź MTA
-        setTimeout(checkProcess, 1000)
-        setInterval(checkProcess, 5000);
-        const newVersion = store.get('newVersion');
-        const currentVersion = app.getVersion();
-        const releaseNotes = store.get('releaseNotes'); 
-
-        if (newVersion && newVersion !== currentVersion) {
-          const releaseNote = sanitizeHtml(releaseNotes, {
-            allowedTags: [],
-            allowedAttributes: {}
-          });
-
-          dialog.showMessageBox({
-            type: 'info',
-            title: 'Nowa wersja zainstalowana!',
-            message: `Zmiany w wersji: ${newVersion}.`,
-            detail: releaseNote,
-            buttons: ['OK']
-          });
-
-          store.delete('newVersion');
-          store.delete('releaseNotes');
+      // Sprawdź MTA
+      setTimeout(checkProcess, 1000);
+      setInterval(checkProcess, 5000);
+    
+      const newVersion = store.get('newVersion');
+      const currentVersion = app.getVersion();
+      const releaseNotes = store.get('releaseNotes'); 
+    
+      if (newVersion && newVersion !== currentVersion) {
+        const releaseNote = sanitizeHtml(releaseNotes, {
+          allowedTags: [],
+          allowedAttributes: {}
+        });
+    
+        dialog.showMessageBox({
+          type: 'info',
+          title: 'Nowa wersja zainstalowana!',
+          message: `Zmiany w wersji: ${newVersion}.`,
+          detail: releaseNote,
+          buttons: ['OK']
+        });
+    
+        store.delete('newVersion');
+        store.delete('releaseNotes');
       }
     });
     
