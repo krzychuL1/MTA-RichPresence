@@ -51,9 +51,9 @@ function createWindow() {
       },
     });
 
-  //win.removeMenu();
+  win.removeMenu();
   win.webContents.on('devtools-opened', () => {
-  //win.webContents.closeDevTools();
+  win.webContents.closeDevTools();
   });
 
   win.webContents.on('before-input-event', (event, input) => {
@@ -861,7 +861,7 @@ app.whenReady().then(() => {
           
         // Sprawdź update
         sprawdzupdate();
-        //setInterval(autoupdate20min, 1200000);
+        setInterval(autoupdate20min, 1200000);
 
 
         // Sprawdzanie aktualizacji
@@ -903,27 +903,30 @@ app.whenReady().then(() => {
     app.on('ready', () => {
         // Sprawdź MTA
         checkProcess();
-        //setTimeout(checkProcess, 2000)
         setInterval(checkProcess, 5000);
         const newVersion = store.get('newVersion');
         const currentVersion = app.getVersion();
-        const releaseNotes = store.get('releaseNotes');
+        const releaseNotes = store.get('releaseNotes'); 
 
         if (newVersion && newVersion !== currentVersion) {
           const releaseNote = sanitizeHtml(releaseNotes, {
             allowedTags: [],
             allowedAttributes: {}
           });
-        ipcMain.on('update-changelog', (event) => {
-          console.log(releaseNote)
-          event.sender.send('update-changelog', releaseNote);
-        });
+
+          dialog.showMessageBox({
+            type: 'info',
+            title: 'Nowa wersja zainstalowana!',
+            message: `Zmiany w wersji: ${newVersion}.`,
+            detail: releaseNote,
+            buttons: ['OK']
+          });
 
         
         
 
-        //store.delete('newVersion');
-        //store.delete('releaseNotes');
+        store.delete('newVersion');
+        store.delete('releaseNotes');
       }
     });
     

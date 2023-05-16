@@ -6,20 +6,20 @@
   <script src="https://kit.fontawesome.com/3b0f0374a9.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <h1 style="text-align: center; size: 50px; font-family: Impact, Haettenschweiler, sans-serif;">MTA Discord Rich Presence 4Life Edition</h1>
-  <p style="text-align: center; size: 15px" id="wersja"></p>
+  <h1 id="tytul">MTA Discord Rich Presence 4Life Edition</h1>
+  <p id="wersja"></p>
           <div class="sidebar">
             <div>
-             <button onclick="frakcje()" id="frakcje-biznesy"><i class="fa-solid fa-briefcase" style="color: #000000;"></i></button>
+             <button onclick="frakcje()" id="frakcje-biznesy"><i class="fa-solid fa-briefcase" style="color: white;"></i></button>
             </div>
             <div>
-              <button onclick="prace()" id="prace"><i class="fa-solid fa-person-digging" style="color: #000000;"></i></button>
+              <button onclick="prace()" id="prace"><i class="fa-solid fa-person-digging" style="color: white;"></i></button>
              </div>
              <div>
-              <button onclick="custom()" id="custom"><i class="fa-regular fa-keyboard" style="color: #000000;"></i></button>
+              <button onclick="custom()" id="custom"><i class="fa-regular fa-keyboard" style="color: white;"></i></button>
              </div>
              <div>
-              <button onclick="przyciski()" id="przyciski"><i class="fa-regular fa-square-check" style="color: #000000;"></i></button>
+              <button onclick="przyciski()" id="przyciski"><i class="fa-regular fa-square-check" style="color: white;"></i></button>
              </div>
            </div>
 
@@ -81,13 +81,13 @@
                     
     <div style="display: none;" class="sidebar-items" id="sidebar-items-custom">
         <h3 class="frakcje">Własny Status</h3>
-        <label for="custom-status-details">Details</label><br>
+        <label for="custom-status-details" id="tekst">Details</label><br>
         <input id="custom-status-details" type="text" required><br><br>
-        <label for="custom-status-state">State</label><br>
+        <label for="custom-status-state" id="tekst">State</label><br>
         <input id="custom-status-state" type="text" required><br>
         <input type="submit" name="" id="set-status-button4" value="Ustaw Własny status">
         <br>
-        <h4>Oznaczenie pól</h4>
+        <h4 id="tekst">Oznaczenie pól</h4>
         <img id="status_help" src="img/status_help.png">
       </div>
 
@@ -95,14 +95,14 @@
         
    <div style="display: none;" class="sidebar-items" id="sidebar-items-przyciski">
       <h3 class="frakcje">Przyciski</h3>
-      <label for="select-button-ilosc">Ilość przycisków</label>
+      <label id="tekst" for="select-button-ilosc">Ilość przycisków</label>
       <select id="select-button-ilosc" name="select">
       <option value="1" selected>1</option>
       <option value="2">2</option>
       </select><br>
-      <label for="status-button-name1">Nazwa</label><br>
+      <label id="tekst" for="status-button-name1">Nazwa</label><br>
       <input id="status-button-name1" type="text" required><br><br>
-      <label for="status-button-link1">Link</label><br>
+      <label id="tekst" for="status-button-link1">Link</label><br>
       <input id="custom-status-link1" type="text" required><br><br>
       <div id="drugie-button"></div>
       <input type="submit" name="" id="set-button-buttons" value="Ustaw przyciski">
@@ -115,18 +115,14 @@
     <h3 class="logh3">Logi</h3>
     <strong><pre id="log"></pre></strong>
   </div>
-  <div id="status" style="position: fixed; bottom: 10px; right: 10px;"></div>
-  <div style="position: fixed; bottom: 10px; left: 10px; font-size: 12px;">Stworzone przez: KrzychuL_</div>
+  <div id="status"></div>
+  <div id="autor">Stworzone przez: KrzychuL_</div>
 
   <div id="notification" class="hidden">
     <p id="message" style="text-align: center;"></p>
     <div class="progress-bar">
       <div id="update-progress" class="progress" style="text-align: center;"></div>
     </div>
-  </div>
-  <div id="update-notification" class="hidden">
-    <p style="text-align: center;" valign="top">Zmiany w aktualizacji:</p>
-    <p id="update-message" style="text-align: center;"></p>
   </div>
   <script src="renderer.js"></script>
 </body>

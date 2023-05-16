@@ -131,10 +131,10 @@ let option = null;
     option = event.target.value;
     if (option === '2') {
       drugieButton.innerHTML = `
-        <h4 style="text-align: center;">Drugi Przycisk</h4>
-        <label for="status-button-name2">Nazwa</label><br>
+        <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
+        <label id="tekst" for="status-button-name2">Nazwa</label><br>
         <input id="status-button-name2" type="text" required><br><br>
-        <label for="status-button-link2">Link</label><br>
+        <label id="tekst" for="status-button-link2">Link</label><br>
         <input id="custom-status-link2" type="text" required><br><br>
       `;
       statusNazwa2 = document.getElementById('status-button-name2');
@@ -202,11 +202,3 @@ let option = null;
     document.getElementById("sidebar-items-custom").style.display = "none";
     document.getElementById("sidebar-items-przyciski").style.display = "block";
   }
-
-  const updateNotification = document.getElementById('update-notification');
-  const updateMessage = document.getElementById('update-message');
-
-  ipcRenderer.on('update-changelog', (event, releaseNote) => {
-    updateMessage.innerText = releaseNote;
-    updateNotification.classList.remove('hidden');
-  });
