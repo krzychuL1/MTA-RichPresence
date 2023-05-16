@@ -922,11 +922,8 @@ app.whenReady().then(() => {
             buttons: ['OK']
           });
 
-        
-        
-
-        store.delete('newVersion');
-        store.delete('releaseNotes');
+          store.delete('newVersion');
+          store.delete('releaseNotes');
       }
     });
     
