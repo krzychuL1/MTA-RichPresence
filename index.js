@@ -78,6 +78,7 @@ function createWindow() {
 
 let isRunning = false;
 let dziala = false;
+let data = null;
 
 async function checkProcess() {
   try {
@@ -86,6 +87,7 @@ async function checkProcess() {
     if (processes.length > 0 && !isRunning) {
       //console.log('MTA jest wlaczone');
       win.webContents.send('log', 'MTA jest włączone! ✅');
+      data = Date.now();
       isRunning = true;
       dziala = true
       win.logsSent.isRunning = true;
@@ -124,14 +126,12 @@ let currentStatus = null;
 let currentStatus2 = null;
 let currentStatus3 = null;
 
-
     // Biznesy
     ipcMain.on('set-status2', (event, status2) => {
       if (currentStatus2 === status2) {
         win.webContents.send('log', `Status "${status2}"\njest już ustawiony! ❌`);
         return;
       }
-      const data = Date.now()
       switch (status2) {
           case 'Buildings4you':
             if (win.logsSent.isRunning == true) {
@@ -375,7 +375,6 @@ ipcMain.on('set-status', (event, status) => {
     win.webContents.send('log', `Status "${status}"\njest już ustawiony! ❌`);
     return;
   }
-  const data = Date.now()
   switch (status) {
       case 'San Andreas Police Department':
         if (win.logsSent.isRunning == true) {
@@ -493,7 +492,6 @@ ipcMain.on('set-status3', (event, status3) => {
     win.webContents.send('log', `Status "${status3}"\njest już ustawiony! ❌`);
     return;
   }
-  const data = Date.now()
   switch (status3) {
       case 'Kopalnia':
         if (win.logsSent.isRunning == true) {
@@ -754,7 +752,6 @@ ipcMain.on('set-status3', (event, status3) => {
 
   // Własny status
 ipcMain.on('set-status4', (event, statusDetails, statusState) => {
-  const data = Date.now()
         if (win.logsSent.isRunning == true) {
       const activity = {
           details: statusDetails,
@@ -824,7 +821,6 @@ ipcMain.on('reset-button', (event) => {
 
 
 async function setRichPresence() {
-  const data = Date.now();
   const activity = {
     largeImageKey: 'mta',
     instance: false,
