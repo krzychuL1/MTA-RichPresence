@@ -893,9 +893,9 @@ app.whenReady().then(() => {
       });
       
       autoUpdater.on('update-downloaded', (info) => {
-        autoUpdater.quitAndInstall()
         store.set('newVersion', info.version);
         store.set('releaseNotes', info.releaseNotes);
+        autoUpdater.quitAndInstall()
       });
 
 
@@ -914,12 +914,12 @@ app.whenReady().then(() => {
     
       const newVersion = store.get('newVersion');
       const currentVersion = app.getVersion();
-      const releaseNotes = store.get('releaseNotes'); 
+      const releaseNotes = store.get('releaseNotes');
     
-      if (newVersion && newVersion < currentVersion) {
+      if (newVersion && newVersion !== currentVersion) {
         const releaseNote = sanitizeHtml(releaseNotes, {
           allowedTags: [],
-          allowedAttributes: {}
+          allowedAttributes: {},
         });
     
         dialog.showMessageBox({
@@ -927,7 +927,7 @@ app.whenReady().then(() => {
           title: 'Nowa wersja zainstalowana!',
           message: `Zmiany w wersji: ${newVersion}.`,
           detail: releaseNote,
-          buttons: ['OK']
+          buttons: ['OK'],
         });
     
         store.delete('newVersion');

@@ -1,4 +1,6 @@
 const { ipcRenderer } = require('electron');
+const fs = require('fs');
+const path = require('path');
 
 ipcRenderer.send('app-version');
 
@@ -61,7 +63,7 @@ const setStatusButton4 = document.getElementById('set-status-button4');
 const statusTextDetails = document.getElementById('custom-status-details');
 const statusTextState = document.getElementById('custom-status-state');
 
-setStatusButton4.addEventListener('click', () => {
+ setStatusButton4.addEventListener('click', () => {
  const statusState = statusTextState.value;
  const statusDetails = statusTextDetails.value;
  const logEl = document.getElementById('log');
@@ -70,7 +72,27 @@ setStatusButton4.addEventListener('click', () => {
   logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
   return;
 }
- ipcRenderer.send('set-status4', statusDetails, statusState);
+
+let config = {};
+if (fs.existsSync('config.json')) {
+  const existingConfig = fs.readFileSync('config.json');
+  config = JSON.parse(existingConfig);
+}
+
+config.custom_status = {
+  state: statusState,
+  details: statusDetails
+};
+
+fs.writeFile('config.json', JSON.stringify(config), (err) => {
+  if (err) {
+    logEl.textContent += 'Błąd podczas zapisywania pliku konfiguracyjnego! ❌' + '\n';
+    return;
+  }
+    ipcRenderer.send('set-status4', statusDetails, statusState);
+    logEl.textContent += 'Konfiguracja przycisków zapisana pomyślnie! ✅' + '\n';
+});
+
 });
 
 
@@ -112,10 +134,6 @@ const statusEl = document.getElementById('status');
     message.innerText = 'Pobieranie aktualizacji';
     notification.classList.remove('hidden');
   });
-
-
-  const fs = require('fs');
-  const path = require('path');
   
   const setButton = document.getElementById('set-button-buttons');
   const resetButton = document.getElementById('reset-button-buttons');
@@ -143,15 +161,19 @@ const statusEl = document.getElementById('status');
           logEl.textContent += 'Plik konfiguracyjny został wczytany! ✅' + '\n';
         }
         // Odczytanie wartości przycisku 1
+        if (config.custom_status) {
+          statusTextDetails.value = config.custom_status.details || '';
+          statusTextState.value = config.custom_status.state || '';
+        }
+
+
         if (config.button1) {
           statusNazwa1.value = config.button1.nazwa || '';
           statusLink1.value = config.button1.link || '';
-          console.log(`1 Przycisk`);
         }
   
         // Odczytanie wartości przycisku 2
         if (config.button2) {
-          console.log(`2 Przycisk`);
           option = 2;
           selectIlosc.value = option.toString();
           drugieButton.innerHTML = `
@@ -205,17 +227,20 @@ const statusEl = document.getElementById('status');
         logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
         return;
       }
-  
-      const config = {
-        option: 2,
-        button1: {
-          nazwa: Nazwa1,
-          link: Link1
-        },
-        button2: {
-          nazwa: Nazwa2,
-          link: Link2
-        }
+
+      let config = {};
+      if (fs.existsSync('config.json')) {
+        const existingConfig = fs.readFileSync('config.json');
+        config = JSON.parse(existingConfig);
+      }
+      config.option = 2;
+      config.button1 = {
+        nazwa: Nazwa1,
+        link: Link1
+      };
+      config.button2 = {
+        nazwa: Nazwa2,
+        link: Link2
       };
   
       fs.writeFile('config.json', JSON.stringify(config), (err) => {
@@ -234,13 +259,18 @@ const statusEl = document.getElementById('status');
         logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
         return;
       }
-      const config = {
-        option: 1,
-        button1: {
-          nazwa: Nazwa1,
-          link: Link1
-        }
+
+      let config = {};
+      if (fs.existsSync('config.json')) {
+        const existingConfig = fs.readFileSync('config.json');
+        config = JSON.parse(existingConfig);
+      }
+      config.option = 1;
+      config.button1 = {
+        nazwa: Nazwa1,
+        link: Link1
       };
+      delete config.button2;
   
       fs.writeFile('config.json', JSON.stringify(config), (err) => {
         if (err) {
