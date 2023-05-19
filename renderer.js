@@ -131,7 +131,7 @@ const statusEl = document.getElementById('status');
   // Funkcja do odczytu pliku konfiguracyjnego
   function readConfigFile() {
     const logEl = document.getElementById('log');
-    const configPath = path.join(__dirname, 'config.json');
+    const configPath = path.join('config.json');
   
     try {
       // Sprawdzenie czy plik istnieje
