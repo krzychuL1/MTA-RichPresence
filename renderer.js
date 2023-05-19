@@ -114,22 +114,73 @@ const statusEl = document.getElementById('status');
   });
 
 
-const setButton = document.getElementById('set-button-buttons');
-const resetButton = document.getElementById('reset-button-buttons');
-const statusNazwa1 = document.getElementById('status-button-name1');
-const statusLink1 = document.getElementById('custom-status-link1');
-let statusNazwa2 = null;
-let statusLink2 = null;
-
+  const fs = require('fs');
+  const path = require('path');
+  
+  const setButton = document.getElementById('set-button-buttons');
+  const resetButton = document.getElementById('reset-button-buttons');
+  const statusNazwa1 = document.getElementById('status-button-name1');
+  const statusLink1 = document.getElementById('custom-status-link1');
+  let statusNazwa2;
+  let statusLink2;
   const selectIlosc = document.getElementById('select-button-ilosc');
   const drugieButton = document.getElementById('drugie-button');
-
-let option = null;
-
+  
+  let option = null;
+  
+  // Funkcja do odczytu pliku konfiguracyjnego
+  function readConfigFile() {
+    const logEl = document.getElementById('log');
+    const configPath = path.join(__dirname, 'config.json');
+  
+    try {
+      // Sprawdzenie czy plik istnieje
+      if (fs.existsSync(configPath)) {
+        const configData = fs.readFileSync(configPath, 'utf-8');
+        const config = JSON.parse(configData);
+        
+        if(config){
+          logEl.textContent += 'Plik konfiguracyjny został wczytany! ✅' + '\n';
+        }
+        // Odczytanie wartości przycisku 1
+        if (config.button1) {
+          statusNazwa1.value = config.button1.nazwa || '';
+          statusLink1.value = config.button1.link || '';
+          console.log(`1 Przycisk`);
+        }
+  
+        // Odczytanie wartości przycisku 2
+        if (config.button2) {
+          console.log(`2 Przycisk`);
+          option = 2;
+          selectIlosc.value = option.toString();
+          drugieButton.innerHTML = `
+            <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
+            <input id="status-button-name2" type="text" placeholder="Nazwa" value="${config.button2.nazwa || ''}" required><br><br>
+            <input id="custom-status-link2" type="text" placeholder="Link" value="${config.button2.link || ''}" required><br><br>
+          `;
+          statusNazwa2 = document.getElementById('status-button-name2');
+          statusLink2 = document.getElementById('custom-status-link2');
+        }
+      } else {
+        // Jeżeli plik nie istnieje, utwórz nowy pusty plik
+        fs.writeFileSync(configPath, '{}');
+        logEl.textContent += 'Plik konfiguracyjny został utworzony! ✅' + '\n';
+      }
+    } catch (err) {
+      // Obsługa błędu odczytu/zapisu pliku
+      console.error('Błąd odczytu/zapisu pliku konfiguracyjnego:', err);
+    }
+  }
+  
+  // Wywołanie funkcji odczytu pliku konfiguracyjnego przy uruchomieniu aplikacji
+  readConfigFile();
+  
+  // Odbieranie zdarzenia zmiany opcji w elemencie select
   selectIlosc.addEventListener('change', (event) => {
-    
-    option = event.target.value;
-    if (option === '2') {
+    option = parseInt(event.target.value, 10);
+  
+    if (option === 2) {
       drugieButton.innerHTML = `
         <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
         <input id="status-button-name2" type="text" placeholder="Nazwa" required><br><br>
@@ -141,32 +192,66 @@ let option = null;
       drugieButton.innerHTML = '';
     }
   });
-
+  
   setButton.addEventListener('click', (event) => {
     const logEl = document.getElementById('log');
-    if (option === '2') {
+    if (option === 2) {
       const Nazwa1 = statusNazwa1.value;
       const Link1 = statusLink1.value;
       const Link2 = statusLink2.value;
       const Nazwa2 = statusNazwa2.value;
-
+  
       if (!Nazwa1 || !Link1 || !Link2 || !Nazwa2) {
         logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
         return;
       }
-      ipcRenderer.send('set-button2', Nazwa1, Link1, Link2, Nazwa2);
+  
+      const config = {
+        option: 2,
+        button1: {
+          nazwa: Nazwa1,
+          link: Link1
+        },
+        button2: {
+          nazwa: Nazwa2,
+          link: Link2
+        }
+      };
+  
+      fs.writeFile('config.json', JSON.stringify(config), (err) => {
+        if (err) {
+          logEl.textContent += 'Błąd podczas zapisywania pliku konfiguracyjnego! ❌' + '\n';
+          return;
+        }
+        ipcRenderer.send('set-button2', Nazwa1, Link1, Link2, Nazwa2);
+        logEl.textContent += 'Konfiguracja przycisków zapisana pomyślnie! ✅' + '\n';
+      });
     } else {
-
       const Nazwa1 = statusNazwa1.value;
       const Link1 = statusLink1.value;
-
+  
       if (!Nazwa1 || !Link1) {
         logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
         return;
       }
-      ipcRenderer.send('set-button1', Nazwa1, Link1);
+      const config = {
+        option: 1,
+        button1: {
+          nazwa: Nazwa1,
+          link: Link1
+        }
+      };
+  
+      fs.writeFile('config.json', JSON.stringify(config), (err) => {
+        if (err) {
+          logEl.textContent += 'Błąd podczas zapisywania pliku konfiguracyjnego! ❌' + '\n';
+          return;
+        }
+        ipcRenderer.send('set-button1', Nazwa1, Link1);
+        logEl.textContent += 'Konfiguracja przycisku zapisana pomyślnie! ✅' + '\n';
+      });
     }
-   });
+  });
 
    resetButton.addEventListener('click', () => {
     ipcRenderer.send('reset-button');

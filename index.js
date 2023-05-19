@@ -776,6 +776,7 @@ ipcMain.on('set-status4', (event, statusDetails, statusState) => {
 // Przyciski
 
 // 1 Przycisk
+
 ipcMain.on('set-button1', (event, Nazwa1, Link1) => {
   buttons = [
     { label: Nazwa1, url: Link1 },
@@ -915,7 +916,7 @@ app.whenReady().then(() => {
       const currentVersion = app.getVersion();
       const releaseNotes = store.get('releaseNotes'); 
     
-      if (newVersion && newVersion !== currentVersion) {
+      if (newVersion && newVersion < currentVersion) {
         const releaseNote = sanitizeHtml(releaseNotes, {
           allowedTags: [],
           allowedAttributes: {}
