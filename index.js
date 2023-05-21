@@ -63,13 +63,12 @@ function createWindow() {
   
     win.loadFile('index.html');
 
+    // WERSJA
     ipcMain.on('app-version', (event) => {
       const version = AppVersion();
-      // Wysyłanie odpowiedzi na zapytanie o wersję do procesu renderera
       event.sender.send('got-app-version', version);
     });
   
-    // Dodaj właściwość logsSent do obiektu win
     win.logsSent = {};
 
 
@@ -867,7 +866,7 @@ app.whenReady().then(() => {
 
           
         // Sprawdź update
-        sprawdzupdate();
+        setTimeout(sprawdzupdate, 1000)
         setInterval(autoupdate20min, 1200000);
 
 
@@ -881,7 +880,6 @@ app.whenReady().then(() => {
           autoUpdater.checkForUpdates();
           win.webContents.send('log', 'Sprawdzanie aktualizacji');
         }
-        //autoUpdater.checkForUpdates();
       
         autoUpdater.on('update-available', () => {
           win.webContents.send('update_available');
@@ -908,6 +906,7 @@ app.whenReady().then(() => {
     });
 
     app.on('ready', () => {
+      
       // Sprawdź MTA
       setTimeout(checkProcess, 1000);
       setInterval(checkProcess, 5000);

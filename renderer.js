@@ -3,19 +3,15 @@ const fs = require('fs');
 const path = require('path');
 
 ipcRenderer.send('app-version');
-
-// Odebranie odpowiedzi na zapytanie o wersję z processu głównego
 ipcRenderer.on('got-app-version', (event, version) => {
-  // Ustawienie wersji w elemencie HTML z id "app-version"
   document.getElementById('wersja').innerText = `Wersja: ${version}`;
 });
 
 
-const MAX_LOG_LENGTH = 460; // maksymalna długość loga
+const MAX_LOG_LENGTH = 460;
 
 const logEl = document.getElementById('log');
 
-// nasłuchiwanie na kliknięcie przycisku "Wyczyść log"
 const clearLogBtn = document.getElementById('clear-log-btn');
 clearLogBtn.addEventListener('click', () => {
   logEl.textContent = '';
@@ -24,7 +20,6 @@ clearLogBtn.addEventListener('click', () => {
 ipcRenderer.on('log', (event, data) => {
   logEl.textContent += data + '\n';
 
-  // usuń starsze wpisy, kiedy długość tekstu przekroczy MAX_LOG_LENGTH
   if (logEl.textContent.length > MAX_LOG_LENGTH) {
     const lines = logEl.textContent.split('\n');
     const numLinesToRemove = lines.length - 1;
@@ -90,7 +85,7 @@ fs.writeFile('config.json', JSON.stringify(config), (err) => {
     return;
   }
     ipcRenderer.send('set-status4', statusDetails, statusState);
-    logEl.textContent += 'Konfiguracja przycisków zapisana pomyślnie! ✅' + '\n';
+    logEl.textContent += 'Konfiguracja własnego statusu została zapisana pomyślnie! ✅' + '\n';
 });
 
 });
@@ -98,9 +93,7 @@ fs.writeFile('config.json', JSON.stringify(config), (err) => {
 
 const resetStatusButton = document.getElementById('status-reset');
 
-// Obsługa kliknięcia przycisku
 resetStatusButton.addEventListener('click', () => {
-  // Wysłanie zdarzenia do procesu głównego z prośbą o zmianę statusu Discord RPC
   ipcRenderer.send('reset-rpc-status');
 });
 
@@ -108,20 +101,17 @@ const statusEl = document.getElementById('status');
   let frame = 0;
   const frames = ['Aplikacja działa.', 'Aplikacja działa..', 'Aplikacja działa...', 'Aplikacja działa.'];
   statusEl.textContent = frames[frame];
-
-  // Definicja funkcji zmieniającej ramkę animacji
   const nextFrame = () => {
     frame = (frame + 1) % frames.length;
     statusEl.textContent = frames[frame];
   };
 
-  // Uruchomienie animacji z prędkością 500ms na ramkę
   const intervalId = setInterval(nextFrame, 500);
 
   const notification = document.getElementById('notification');
+  const updateWheel = document.getElementById('loader');
   const message = document.getElementById('message');
   
-  // Nasłuchiwanie na zmiany w procesie pobierania aktualizacji
 
   const updateProgress = document.getElementById('update-progress');
   ipcRenderer.on('update_progress', (event, percent) => {
@@ -133,6 +123,7 @@ const statusEl = document.getElementById('status');
     ipcRenderer.removeAllListeners('update_available');
     message.innerText = 'Pobieranie aktualizacji';
     notification.classList.remove('hidden');
+    updateWheel.classList.remove('hidden');
   });
   
   const setButton = document.getElementById('set-button-buttons');
@@ -146,13 +137,11 @@ const statusEl = document.getElementById('status');
   
   let option = null;
   
-  // Funkcja do odczytu pliku konfiguracyjnego
-  function readConfigFile() {
+  function CheckConfig() {
     const logEl = document.getElementById('log');
     const configPath = path.join('config.json');
   
     try {
-      // Sprawdzenie czy plik istnieje
       if (fs.existsSync(configPath)) {
         const configData = fs.readFileSync(configPath, 'utf-8');
         const config = JSON.parse(configData);
@@ -160,7 +149,6 @@ const statusEl = document.getElementById('status');
         if(config){
           logEl.textContent += 'Plik konfiguracyjny został wczytany! ✅' + '\n';
         }
-        // Odczytanie wartości przycisku 1
         if (config.custom_status) {
           statusTextDetails.value = config.custom_status.details || '';
           statusTextState.value = config.custom_status.state || '';
@@ -172,7 +160,6 @@ const statusEl = document.getElementById('status');
           statusLink1.value = config.button1.link || '';
         }
   
-        // Odczytanie wartości przycisku 2
         if (config.button2) {
           option = 2;
           selectIlosc.value = option.toString();
@@ -185,20 +172,16 @@ const statusEl = document.getElementById('status');
           statusLink2 = document.getElementById('custom-status-link2');
         }
       } else {
-        // Jeżeli plik nie istnieje, utwórz nowy pusty plik
         fs.writeFileSync(configPath, '{}');
         logEl.textContent += 'Plik konfiguracyjny został utworzony! ✅' + '\n';
       }
     } catch (err) {
-      // Obsługa błędu odczytu/zapisu pliku
       console.error('Błąd odczytu/zapisu pliku konfiguracyjnego:', err);
     }
   }
   
-  // Wywołanie funkcji odczytu pliku konfiguracyjnego przy uruchomieniu aplikacji
-  readConfigFile();
-  
-  // Odbieranie zdarzenia zmiany opcji w elemencie select
+  CheckConfig();
+
   selectIlosc.addEventListener('change', (event) => {
     option = parseInt(event.target.value, 10);
   
