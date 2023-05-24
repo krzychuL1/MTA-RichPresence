@@ -195,7 +195,7 @@ let currentStatus3 = null;
               win.webContents.send('log', 'MTA jest wyłączone! ❌');
             }
               break;
-          case '41.St Mechanized Infantry Division':
+          case 'San Andreas Armed Forces':
             if (win.logsSent.isRunning == true) {
               const activity = {
               details: `• Biznes`,
