@@ -915,7 +915,7 @@ app.whenReady().then(() => {
       const currentVersion = app.getVersion();
       const releaseNotes = store.get('releaseNotes');
     
-      if (newVersion && newVersion !== currentVersion) {
+      if (newVersion === currentVersion) {
         const releaseNote = sanitizeHtml(releaseNotes, {
           allowedTags: [],
           allowedAttributes: {},

@@ -67,27 +67,10 @@ const statusTextState = document.getElementById('custom-status-state');
   logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
   return;
 }
-
-let config = {};
-if (fs.existsSync('config.json')) {
-  const existingConfig = fs.readFileSync('config.json');
-  config = JSON.parse(existingConfig);
-}
-
-config.custom_status = {
-  state: statusState,
-  details: statusDetails
-};
-
-fs.writeFile('config.json', JSON.stringify(config), (err) => {
-  if (err) {
-    logEl.textContent += 'Błąd podczas zapisywania pliku konfiguracyjnego! ❌' + '\n';
-    return;
-  }
+      store.set('StatusDetails', statusDetails);
+      store.set('StatusState', statusState);
     ipcRenderer.send('set-status4', statusDetails, statusState);
-    logEl.textContent += 'Konfiguracja własnego statusu została zapisana pomyślnie! ✅' + '\n';
-});
-
+    logEl.textContent += 'Konfiguracja własnego statusu \nzostała zapisana pomyślnie! ✅' + '\n';
 });
 
 
@@ -137,48 +120,34 @@ const statusEl = document.getElementById('status');
   
   let option = null;
   
+  const Store = require('electron-store');
+  const store = new Store();
+
   function CheckConfig() {
     const logEl = document.getElementById('log');
-    const configPath = path.join('config.json');
-  
-    try {
-      if (fs.existsSync(configPath)) {
-        const configData = fs.readFileSync(configPath, 'utf-8');
-        const config = JSON.parse(configData);
-        
-        if(config){
-          logEl.textContent += 'Plik konfiguracyjny został wczytany! ✅' + '\n';
-        }
-        if (config.custom_status) {
-          statusTextDetails.value = config.custom_status.details || '';
-          statusTextState.value = config.custom_status.state || '';
-        }
-
-
-        if (config.button1) {
-          statusNazwa1.value = config.button1.nazwa || '';
-          statusLink1.value = config.button1.link || '';
-        }
-  
-        if (config.button2) {
-          option = 2;
-          selectIlosc.value = option.toString();
-          drugieButton.innerHTML = `
-            <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
-            <input id="status-button-name2" type="text" placeholder="Nazwa" value="${config.button2.nazwa || ''}" required><br><br>
-            <input id="custom-status-link2" type="text" placeholder="Link" value="${config.button2.link || ''}" required><br><br>
-          `;
-          statusNazwa2 = document.getElementById('status-button-name2');
-          statusLink2 = document.getElementById('custom-status-link2');
-        }
-      } else {
-        fs.writeFileSync(configPath, '{}');
-        logEl.textContent += 'Plik konfiguracyjny został utworzony! ✅' + '\n';
-      }
-    } catch (err) {
-      console.error('Błąd odczytu/zapisu pliku konfiguracyjnego:', err);
-    }
+      if (store.get('Button1Nazwa')) {
+          statusNazwa1.value = store.get('Button1Nazwa') || '';
+          statusLink1.value = store.get('Button1Link') || '';
+      } 
+      if (store.get('Button2Nazwa')) {
+        option = 2;
+        selectIlosc.value = option.toString();
+        statusNazwa1.value = store.get('Button1Nazwa') || '';
+        statusLink1.value = store.get('Button1Link') || '';
+        drugieButton.innerHTML = `
+        <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
+        <input id="status-button-name2" type="text" placeholder="Nazwa" value="${store.get('Button2Nazwa') || ''}" required><br><br>
+        <input id="custom-status-link2" type="text" placeholder="Link" value="${store.get('Button2Link') || ''}" required><br><br>
+      `;
+      statusNazwa2 = document.getElementById('status-button-name2');
+      statusLink2 = document.getElementById('custom-status-link2');
+    } 
+    if (store.get('StatusDetails')) {
+      statusTextDetails.value = store.get('StatusDetails') || '';
+      statusTextState.value = store.get('StatusState') || '';
+  } 
   }
+
   
   CheckConfig();
 
@@ -210,30 +179,12 @@ const statusEl = document.getElementById('status');
         logEl.textContent += 'Pola nie mogą być puste! ❌' + '\n';
         return;
       }
-
-      let config = {};
-      if (fs.existsSync('config.json')) {
-        const existingConfig = fs.readFileSync('config.json');
-        config = JSON.parse(existingConfig);
-      }
-      config.option = 2;
-      config.button1 = {
-        nazwa: Nazwa1,
-        link: Link1
-      };
-      config.button2 = {
-        nazwa: Nazwa2,
-        link: Link2
-      };
-  
-      fs.writeFile('config.json', JSON.stringify(config), (err) => {
-        if (err) {
-          logEl.textContent += 'Błąd podczas zapisywania pliku konfiguracyjnego! ❌' + '\n';
-          return;
-        }
+      store.set('Button1Nazwa', Nazwa1);
+      store.set('Button1Link', Link1);
+      store.set('Button2Nazwa', Nazwa2);
+      store.set('Button2Link', Link2);
         ipcRenderer.send('set-button2', Nazwa1, Link1, Link2, Nazwa2);
-        logEl.textContent += 'Konfiguracja przycisków zapisana pomyślnie! ✅' + '\n';
-      });
+        logEl.textContent += 'Konfiguracja przycisków\nzostała zapisana pomyślnie! ✅' + '\n';
     } else {
       const Nazwa1 = statusNazwa1.value;
       const Link1 = statusLink1.value;
@@ -243,27 +194,13 @@ const statusEl = document.getElementById('status');
         return;
       }
 
-      let config = {};
-      if (fs.existsSync('config.json')) {
-        const existingConfig = fs.readFileSync('config.json');
-        config = JSON.parse(existingConfig);
-      }
-      config.option = 1;
-      config.button1 = {
-        nazwa: Nazwa1,
-        link: Link1
-      };
-      delete config.button2;
-  
-      fs.writeFile('config.json', JSON.stringify(config), (err) => {
-        if (err) {
-          logEl.textContent += 'Błąd podczas zapisywania pliku konfiguracyjnego! ❌' + '\n';
-          return;
-        }
+        store.set('Button1Nazwa', Nazwa1);
+        store.set('Button1Link', Link1);
+        store.delete('Button2Nazwa');
+        store.delete('Button2Link');
         ipcRenderer.send('set-button1', Nazwa1, Link1);
-        logEl.textContent += 'Konfiguracja przycisku zapisana pomyślnie! ✅' + '\n';
-      });
-    }
+        logEl.textContent += 'Konfiguracja przycisku\nzostała zapisana pomyślnie! ✅' + '\n';
+      }
   });
 
    resetButton.addEventListener('click', () => {
