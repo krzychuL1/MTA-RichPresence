@@ -920,7 +920,8 @@ app.whenReady().then(() => {
           allowedTags: [],
           allowedAttributes: {},
         });
-    
+        
+        setTimeout(() => {
         dialog.showMessageBox({
           type: 'info',
           title: 'Nowa wersja zainstalowana!',
@@ -928,6 +929,7 @@ app.whenReady().then(() => {
           detail: releaseNote,
           buttons: ['OK'],
         });
+      }, 800);
     
         store.delete('newVersion');
         store.delete('releaseNotes');

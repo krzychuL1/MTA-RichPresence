@@ -99,6 +99,7 @@ const statusEl = document.getElementById('status');
   const updateProgress = document.getElementById('update-progress');
   ipcRenderer.on('update_progress', (event, percent) => {
     updateProgress.innerText = `Pobrano ${Math.floor(percent)}%`;
+    updateWheel.classList.remove('hidden');
   });
   
   
@@ -106,7 +107,6 @@ const statusEl = document.getElementById('status');
     ipcRenderer.removeAllListeners('update_available');
     message.innerText = 'Pobieranie aktualizacji';
     notification.classList.remove('hidden');
-    updateWheel.classList.remove('hidden');
   });
   
   const setButton = document.getElementById('set-button-buttons');
@@ -124,16 +124,29 @@ const statusEl = document.getElementById('status');
   const store = new Store();
 
   function CheckConfig() {
-    const logEl = document.getElementById('log');
       if (store.get('Button1Nazwa')) {
           statusNazwa1.value = store.get('Button1Nazwa') || '';
           statusLink1.value = store.get('Button1Link') || '';
+          const Nazwa1 = statusNazwa1.value;
+          const Link1 = statusLink1.value;
+
+          setTimeout(() => {
+            ipcRenderer.send('set-button1', Nazwa1, Link1);
+          }, 800)
       } 
       if (store.get('Button2Nazwa')) {
         option = 2;
         selectIlosc.value = option.toString();
         statusNazwa1.value = store.get('Button1Nazwa') || '';
         statusLink1.value = store.get('Button1Link') || '';
+        const Nazwa1 = statusNazwa1.value;
+        const Link1 = statusLink1.value;
+        const Link2 = statusLink2.value;
+        const Nazwa2 = statusNazwa2.value;
+
+        setTimeout(() => {
+          ipcRenderer.send('set-button2', Nazwa1, Link1, Link2, Nazwa2);
+        }, 800)
         drugieButton.innerHTML = `
         <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
         <input id="status-button-name2" type="text" placeholder="Nazwa" value="${store.get('Button2Nazwa') || ''}" required><br><br>
@@ -145,6 +158,12 @@ const statusEl = document.getElementById('status');
     if (store.get('StatusDetails')) {
       statusTextDetails.value = store.get('StatusDetails') || '';
       statusTextState.value = store.get('StatusState') || '';
+      const statusState = statusTextState.value;
+      const statusDetails = statusTextDetails.value;
+      setTimeout(() => {
+        ipcRenderer.send('set-status4', statusDetails, statusState);
+      }, 1500)
+
   } 
   }
 
