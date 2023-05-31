@@ -916,17 +916,20 @@ app.whenReady().then(() => {
       const releaseNotes = store.get('releaseNotes');
     
       if (newVersion === currentVersion) {
+        //if (store.get(`releaseNotes`)) {
         const releaseNote = sanitizeHtml(releaseNotes, {
-          allowedTags: [],
+          allowedTags: ['li'],
           allowedAttributes: {},
         });
         
+        let nowosci = releaseNote.replace(/<li>/g, "-").replace(/<\/li>/g, "");
+
         setTimeout(() => {
         dialog.showMessageBox({
           type: 'info',
           title: 'Nowa wersja zainstalowana!',
           message: `Zmiany w wersji: ${newVersion}.`,
-          detail: releaseNote,
+          detail: nowosci,
           buttons: ['OK'],
         });
       }, 800);

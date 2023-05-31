@@ -2,28 +2,31 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_black.css" id="stylesheet">
   <script src="https://kit.fontawesome.com/3b0f0374a9.js" crossorigin="anonymous"></script>
 </head>
 <body>
+  <div>
+    <button onclick="ustawieniain()" id="ustawieniain" title="Ustawienia"><i class="fa-solid fa-gear fa-lg" id="button5" style="color: white;"></i></button>
+   </div>
   <h1 id="tytul">MTA Discord Rich Presence 4Life Edition</h1>
   <p id="wersja"></p>
           <div class="sidebar">
             <div>
-             <button onclick="frakcje()" id="frakcje-biznesy"><i class="fa-solid fa-briefcase" style="color: white;"></i></button>
+             <button onclick="frakcje()" id="frakcje-biznesy" title="Frakcje i biznesy"><i class="fa-solid fa-briefcase" id="button1" style="color: white;"></i></button>
             </div>
             <div>
-              <button onclick="prace()" id="prace"><i class="fa-solid fa-person-digging" style="color: white;"></i></button>
+              <button onclick="prace()" id="prace" title="Prace"><i class="fa-solid fa-person-digging" id="button2" style="color: white;"></i></button>
              </div>
              <div>
-              <button onclick="custom()" id="custom"><i class="fa-regular fa-keyboard" style="color: white;"></i></button>
+              <button onclick="custom()" id="custom" title="Własny status"><i class="fa-regular fa-keyboard" id="button3" style="color: white;"></i></button>
              </div>
              <div>
-              <button onclick="przyciski()" id="przyciski"><i class="fa-regular fa-square-check" style="color: white;"></i></button>
+              <button onclick="przyciski()" id="przyciski" title="Przyciski"><i class="fa-regular fa-square-check" id="button4" style="color: white;"></i></button>
              </div>
            </div>
 
-          <!-- Frakcje i biznesy -->
+                <!-- Frakcje i biznesy -->
 
           <div style="display: block;" class="sidebar-items" id="sidebar-items-frakcje">
         <h3 class="frakcje">Frakcje i Biznesy</h3>
@@ -53,7 +56,7 @@
         <button id="set-status-button2">Ustaw Status Biznesowy</button><br>
       </div>
       
-          <!-- Prace -->
+                <!-- Prace -->
 
           <div style="display: none;" class="sidebar-items" id="sidebar-items-prace">
             <h3 class="frakcje">Prace</h3>
@@ -77,7 +80,7 @@
 
           </div>  
       
-          <!-- Własny status -->
+              <!-- Własny status -->
                     
     <div style="display: none;" class="sidebar-items" id="sidebar-items-custom">
         <h3 class="frakcje">Własny Status</h3>
@@ -113,6 +116,38 @@
   </div>
   <div id="status"></div>
   <div id="autor">Stworzone przez: KrzychuL_</div>
+
+              <!-- Ustawienia -->
+
+      <div style="display: none;" class="ustawienia-okno" id="sidebar-items-ustawienia">
+        <h1 class="frakcje">Ustawienia</h1>
+              <div>
+        <button onclick="ustawieniaout()" id="ustawienia-out" title="Powrót"><i class="fa-solid fa-arrow-left fa-2xl" id="button6" style="color: #ffffff;"></i></button>
+       </div>
+       <a id="kolor-tla" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;"></a>
+       <div class="container">
+        <input type="checkbox" class="checkbox" id="checkbox">
+        <label class="switch" for="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <a id="config-status" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Automatyczne ustawianie własnego</a><br>
+      <a id="config-status" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">statusu przy uruchomieniu aplikacji</a>
+      <div class="container2">
+        <input type="checkbox" class="checkbox" id="checkbox2">
+        <label class="switch" for="checkbox2">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <a id="config-przycisk" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Automatyczne ustawianie własnego</a><br>
+      <a id="config-przycisk" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">przycisku przy uruchomieniu aplikacji</a>
+      <div class="container3">
+        <input type="checkbox" class="checkbox" id="checkbox3">
+        <label class="switch" for="checkbox3">
+          <span class="slider"></span>
+        </label>
+      </div>
+      </div>
 
   <div id="notification" class="hidden">
     <p id="message" style="text-align: center; padding-left: 5px;"></p>

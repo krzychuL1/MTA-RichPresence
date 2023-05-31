@@ -2,16 +2,18 @@ const { ipcRenderer } = require('electron');
 const fs = require('fs');
 const path = require('path');
 
+
+// odbieranie wersji do html
 ipcRenderer.send('app-version');
 ipcRenderer.on('got-app-version', (event, version) => {
   document.getElementById('wersja').innerText = `Wersja: ${version}`;
 });
 
 
+
+// logi
 const MAX_LOG_LENGTH = 460;
-
 const logEl = document.getElementById('log');
-
 const clearLogBtn = document.getElementById('clear-log-btn');
 clearLogBtn.addEventListener('click', () => {
   logEl.textContent = '';
@@ -30,7 +32,7 @@ ipcRenderer.on('log', (event, data) => {
 
 
 
-    const setStatusButton = document.getElementById('set-status-button');
+  const setStatusButton = document.getElementById('set-status-button');
    const statusSelect = document.getElementById('status-select');
 
   setStatusButton.addEventListener('click', () => {
@@ -54,6 +56,9 @@ setStatusButton3.addEventListener('click', () => {
  ipcRenderer.send('set-status3', status3);
 });
 
+
+// własny status
+
 const setStatusButton4 = document.getElementById('set-status-button4');
 const statusTextDetails = document.getElementById('custom-status-details');
 const statusTextState = document.getElementById('custom-status-state');
@@ -76,9 +81,15 @@ const statusTextState = document.getElementById('custom-status-state');
 
 const resetStatusButton = document.getElementById('status-reset');
 
+
+// reset statusu
+
 resetStatusButton.addEventListener('click', () => {
   ipcRenderer.send('reset-rpc-status');
 });
+
+
+// aplikacja działa
 
 const statusEl = document.getElementById('status');
   let frame = 0;
@@ -90,6 +101,9 @@ const statusEl = document.getElementById('status');
   };
 
   const intervalId = setInterval(nextFrame, 500);
+
+
+  // powiadomienie o update
 
   const notification = document.getElementById('notification');
   const updateWheel = document.getElementById('loader');
@@ -123,8 +137,12 @@ const statusEl = document.getElementById('status');
   const Store = require('electron-store');
   const store = new Store();
 
+
+  // sprawdzanie configu
+
   function CheckConfig() {
       if (store.get('Button1Nazwa')) {
+        if (store.get('button_start') === `tak`) {
           statusNazwa1.value = store.get('Button1Nazwa') || '';
           statusLink1.value = store.get('Button1Link') || '';
           const Nazwa1 = statusNazwa1.value;
@@ -132,43 +150,70 @@ const statusEl = document.getElementById('status');
 
           setTimeout(() => {
             ipcRenderer.send('set-button1', Nazwa1, Link1);
-          }, 800)
+          }, 1500)
+        } else {
+          statusNazwa1.value = store.get('Button1Nazwa') || '';
+          statusLink1.value = store.get('Button1Link') || '';
+        }
       } 
       if (store.get('Button2Nazwa')) {
-        option = 2;
-        selectIlosc.value = option.toString();
-        statusNazwa1.value = store.get('Button1Nazwa') || '';
-        statusLink1.value = store.get('Button1Link') || '';
-        const Nazwa1 = statusNazwa1.value;
-        const Link1 = statusLink1.value;
-        const Link2 = statusLink2.value;
-        const Nazwa2 = statusNazwa2.value;
 
-        setTimeout(() => {
-          ipcRenderer.send('set-button2', Nazwa1, Link1, Link2, Nazwa2);
-        }, 800)
-        drugieButton.innerHTML = `
-        <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
-        <input id="status-button-name2" type="text" placeholder="Nazwa" value="${store.get('Button2Nazwa') || ''}" required><br><br>
-        <input id="custom-status-link2" type="text" placeholder="Link" value="${store.get('Button2Link') || ''}" required><br><br>
-      `;
-      statusNazwa2 = document.getElementById('status-button-name2');
-      statusLink2 = document.getElementById('custom-status-link2');
+        if (store.get('button_start') === `tak`){
+          option = 2;
+          selectIlosc.value = option.toString();
+          statusNazwa1.value = store.get('Button1Nazwa') || '';
+          statusLink1.value = store.get('Button1Link') || '';
+          let Nazwa1 = statusNazwa1.value;
+          let Link1 = statusLink1.value;
+          let Link2 = statusLink2.value;
+          let Nazwa2 = statusNazwa2.value;
+  
+          setTimeout(() => {
+            ipcRenderer.send('set-button2', Nazwa1, Link1, Link2, Nazwa2);
+          }, 1500)
+          drugieButton.innerHTML = `
+          <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
+          <input id="status-button-name2" type="text" placeholder="Nazwa" value="${store.get('Button2Nazwa') || ''}" required><br><br>
+          <input id="custom-status-link2" type="text" placeholder="Link" value="${store.get('Button2Link') || ''}" required><br><br>
+        `;
+        statusNazwa2 = document.getElementById('status-button-name2');
+        statusLink2 = document.getElementById('custom-status-link2');
+        } else {
+          option = 2;
+          selectIlosc.value = option.toString();
+          statusNazwa1.value = store.get('Button1Nazwa') || '';
+          statusLink1.value = store.get('Button1Link') || '';
+  
+          drugieButton.innerHTML = `
+          <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
+          <input id="status-button-name2" type="text" placeholder="Nazwa" value="${store.get('Button2Nazwa') || ''}" required><br><br>
+          <input id="custom-status-link2" type="text" placeholder="Link" value="${store.get('Button2Link') || ''}" required><br><br>
+        `;
+        statusNazwa2 = document.getElementById('status-button-name2');
+        statusLink2 = document.getElementById('custom-status-link2');
+        }
     } 
     if (store.get('StatusDetails')) {
-      statusTextDetails.value = store.get('StatusDetails') || '';
-      statusTextState.value = store.get('StatusState') || '';
-      const statusState = statusTextState.value;
-      const statusDetails = statusTextDetails.value;
-      setTimeout(() => {
-        ipcRenderer.send('set-status4', statusDetails, statusState);
-      }, 1500)
-
+      if (store.get('status_start') === `tak`){
+        statusTextDetails.value = store.get('StatusDetails') || '';
+        statusTextState.value = store.get('StatusState') || '';
+        const statusState = statusTextState.value;
+        const statusDetails = statusTextDetails.value;
+        setTimeout(() => {
+          ipcRenderer.send('set-status4', statusDetails, statusState);
+        }, 1500)
+      } else {
+        statusTextDetails.value = store.get('StatusDetails') || '';
+        statusTextState.value = store.get('StatusState') || '';
+      }
   } 
   }
 
   
   CheckConfig();
+
+
+  // wybieranie ilości przycisków i dodawanie pól
 
   selectIlosc.addEventListener('change', (event) => {
     option = parseInt(event.target.value, 10);
@@ -186,6 +231,8 @@ const statusEl = document.getElementById('status');
     }
   });
   
+  // dodawanie dwóch przycisków do configu i do statusu
+
   setButton.addEventListener('click', (event) => {
     const logEl = document.getElementById('log');
     if (option === 2) {
@@ -205,6 +252,7 @@ const statusEl = document.getElementById('status');
         ipcRenderer.send('set-button2', Nazwa1, Link1, Link2, Nazwa2);
         logEl.textContent += 'Konfiguracja przycisków\nzostała zapisana pomyślnie! ✅' + '\n';
     } else {
+  // dodawanie przycisku do configu i do statusu
       const Nazwa1 = statusNazwa1.value;
       const Link1 = statusLink1.value;
   
@@ -222,11 +270,128 @@ const statusEl = document.getElementById('status');
       }
   });
 
+  // usuwanie przycisków ze statusu
+  
    resetButton.addEventListener('click', () => {
     ipcRenderer.send('reset-button');
   });
 
+
+  let button = document.getElementById('checkbox');
+  let button_status = document.getElementById('checkbox2');
+  let button_button = document.getElementById('checkbox3');
+  let kolor_tekst = document.getElementById('kolor-tla');
+  let button1 = document.getElementById('button1');
+  let button2 = document.getElementById('button2');
+  let button3 = document.getElementById('button3');
+  let button4 = document.getElementById('button4');
+  let button5 = document.getElementById('button5');
+  let button6 = document.getElementById('button6');
+  let stylesheet = document.getElementById('stylesheet');
+
+
+  // Jeżeli nie ma motywu/statusu/przycisków'
+
+  if(!store.get(`motyw`)){
+    store.set('motyw', `black`);
+  }
+
+  if(!store.get(`button_start`)){
+    store.set('button_start', `tak`);
+  }
+
+  if(!store.get(`status_start`)){
+    store.set('status_start', `tak`);
+  }
+
+  // ustawianie tła z configu
+    if (store.get('motyw') === `white`) {
+      stylesheet.href = 'style_white.css';
+      button.checked = true;
+      kolor_tekst.innerHTML = "Ustaw czarny motyw"
+      button1.style.color = 'black';
+      button2.style.color = 'black';
+      button3.style.color = 'black';
+      button4.style.color = 'black';
+      button5.style.color = 'black';
+      button6.style.color = 'black';
+    } else {
+      stylesheet.href = 'style_black.css';
+      kolor_tekst.innerHTML = "Ustaw biały motyw"
+      button1.style.color = 'white';
+      button2.style.color = 'white';
+      button3.style.color = 'white';
+      button4.style.color = 'white';
+      button5.style.color = 'white';
+    }
+
+  // ustawianie tła z przycisku
+  button.addEventListener('click', () => {
+    if (stylesheet.href.endsWith('style_black.css')) {
+      stylesheet.href = 'style_white.css';
+      kolor_tekst.innerHTML = "Ustaw czarny motyw"
+      button1.style.color = 'black';
+      button2.style.color = 'black';
+      button3.style.color = 'black';
+      button4.style.color = 'black';
+      button5.style.color = 'black';
+      button6.style.color = 'black';
+      store.set('motyw', `white`);
+    } else {
+      stylesheet.href = 'style_black.css';
+      kolor_tekst.innerHTML = "Ustaw biały motyw"
+      button1.style.color = 'white';
+      button2.style.color = 'white';
+      button3.style.color = 'white';
+      button4.style.color = 'white';
+      button5.style.color = 'white';
+      button6.style.color = 'white';
+      store.set('motyw', `black`);
+    }
+  });
+
+  // ustawianie statusu z configu
+  if (store.get('status_start') === `tak`) {
+    button_status.checked = true;
+  } else {
+  }
+
+  // ustawianie statusu z przycisku
+  button_status.addEventListener('click', () => {
+    if(button_status.checked === true){
+      store.set('status_start', `tak`);
+    } else {
+      store.set('status_start', `nie`);
+    }
+  });
+
+  // ustawianie przycisków z configu
+  if (store.get('button_start') === `tak`) {
+    button_button.checked = true;
+  } else {
+  }
+
+    // ustawianie przycusków z przycisku
+  button_button.addEventListener('click', () => {
+    if(button_button.checked === true){
+      store.set('button_start', `tak`);
+    } else {
+      store.set('button_start', `nie`);
+    }
+  });
+
+  // funkcje
+
+  // przycisk do wchodzenia w ustawienia
+  function ustawieniain() {
+    document.getElementById("sidebar-items-ustawienia").style.display = "block";
+  }
+    // przycisk do wychodzenia z ustawień
+  function ustawieniaout() {
+    document.getElementById("sidebar-items-ustawienia").style.display = "none";
+  }
   
+  // przycisk menu frakcji i biznesów
   function frakcje() {
     document.getElementById("sidebar-items-prace").style.display = "none";
     document.getElementById("sidebar-items-custom").style.display = "none";
@@ -234,6 +399,7 @@ const statusEl = document.getElementById('status');
     document.getElementById("sidebar-items-frakcje").style.display = "block";
   }
   
+    // przycisk menu prac
   function prace() {
     document.getElementById("sidebar-items-prace").style.display = "block";
     document.getElementById("sidebar-items-frakcje").style.display = "none";
@@ -241,6 +407,7 @@ const statusEl = document.getElementById('status');
     document.getElementById("sidebar-items-przyciski").style.display = "none";
   }
   
+    // przycisk menu własnego statusu
   function custom() {
     document.getElementById("sidebar-items-prace").style.display = "none";
     document.getElementById("sidebar-items-frakcje").style.display = "none";
@@ -248,6 +415,7 @@ const statusEl = document.getElementById('status');
     document.getElementById("sidebar-items-custom").style.display = "block";
   }
 
+    // przycisk menu przycisków
   function przyciski() {
     document.getElementById("sidebar-items-prace").style.display = "none";
     document.getElementById("sidebar-items-frakcje").style.display = "none";
