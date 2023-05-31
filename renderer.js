@@ -292,16 +292,16 @@ const statusEl = document.getElementById('status');
 
   // Jeżeli nie ma motywu/statusu/przycisków'
 
+  if(!store.get(`status_start`)){
+    store.set('status_start', `tak`);
+  }
+
   if(!store.get(`motyw`)){
     store.set('motyw', `black`);
   }
 
   if(!store.get(`button_start`)){
     store.set('button_start', `tak`);
-  }
-
-  if(!store.get(`status_start`)){
-    store.set('status_start', `tak`);
   }
 
   // ustawianie tła z configu
