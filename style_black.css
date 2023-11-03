@@ -1,7 +1,25 @@
+:root {
+  --bgcolor: #222222;
+  --czarny: white;
+  --hover: #3E3E3E;
+  --bialy: white;
+  --bgcolorsidebar: #222222;
+}
+.dark-mode {
+  --bgcolor: white;
+  --czarny: black;
+  --bialy: black;
+  --hover: #C9C9C9;
+  --bgcolorsidebar: #fff;
+}
+
+#button1, #button2, #button3, #button4, #button5, #button6{
+  color: var(--bialy);
+}
 #tytul{
   text-align: center; 
   size: 50px; 
-  color: white;
+  color: var(--czarny);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 #wersja{
@@ -9,7 +27,7 @@
   padding-right: 6px;
   size: 15px;
   text-align: center;
-  color: white;
+  color: var(--czarny);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 #autor{
@@ -17,24 +35,24 @@
   bottom: 10px; 
   left: 10px; 
   font-size: 12px;
-  color: white;
+  color: var(--czarny);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 #status{
   position: fixed; 
   bottom: 10px; 
   right: 10px;
-  color: white;
+  color: var(--czarny);
   font-size: 13px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 #tekst{
-  color: white;
+  color: var(--czarny);
 }
 .sidebar-items {
-  border: 1px solid white;
+  border: 1px solid var(--czarny);
   border-radius: 10px;
-  background-color: #222222;
+  background-color: var(--bgcolorsidebar);
   text-align: center;
   top: 120px;
   width: 300px;
@@ -49,8 +67,9 @@
   height: 400px;
 }
 .ustawienia-okno {
+  color: var(--bialy);
   position: fixed;
-  background-color: #222222;
+  background-color: var(--bgcolor);
   text-align: center;
   top: 0px;
   left: 0px;
@@ -58,7 +77,7 @@
   height: 600px;
   opacity: 1;
 }
-#ustawieniain{
+#ustawieniain, #ustawienia-out{
   position: fixed;
   left: 0px;
   top: 0px;
@@ -71,24 +90,8 @@
   border: none;
   transition: background-color 0.3s ease-in-out;
 }
-#ustawieniain:hover{
-  background-color: #3E3E3E;
-}
-#ustawienia-out{
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  height: 40px;
-  width: 40px;
-  background-color: transparent;
-  padding: 2px;
-  cursor: pointer;
-  text-decoration: none;
-  border: none;
-  transition: background-color 0.3s ease-in-out;
-}
-#ustawienia-out:hover{
-  background-color: #3E3E3E;
+#ustawieniain:hover, #ustawienia-out:hover{
+  background-color: var(--hover);
 }
 #frakcje-biznesy{
   position: relative;
@@ -103,7 +106,7 @@
   transition: background-color 0.3s ease-in-out;
 }
 #frakcje-biznesy:hover{
-  background-color: #3E3E3E;
+  background-color: var(--hover);
 }
 #prace{
   left: 11px;
@@ -119,7 +122,7 @@
   transition: background-color 0.3s ease-in-out;
 }
 #prace:hover{
-  background-color: #3E3E3E;
+  background-color: var(--hover);
 }
 #custom{
   left: 11px;
@@ -135,7 +138,7 @@
   transition: background-color 0.3s ease-in-out;
 }
 #custom:hover{
-  background-color: #3E3E3E;
+  background-color: var(--hover);
 }
 #przyciski{
   left: 11px;
@@ -151,31 +154,31 @@
   transition: background-color 0.3s ease-in-out;
 }
 #przyciski:hover{
-  background-color: #3E3E3E;
+  background-color: var(--hover);
 }
 
 .frakcje{
-  color: white;
+  color: var(--czarny);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .logh3{
-  color: white;
+  color: var(--czarny);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   position: relative;
   top: -20px;
 }
 #log{
   animation: fade-in 0.5s ease-in-out forwards;
-  color: white;
+  color: var(--czarny);
   font-size: 13px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   position: relative;
   top: -30px;
 }
 .logidiv{
-  border: 1px solid white;
+  border: 1px solid var(--czarny);
   border-radius: 10px;
-  background-color: #222222;
+  background-color: var(--bgcolor);
   position: fixed;
   top: 120px;
   right: 20px;
@@ -201,6 +204,7 @@
   left: 43%;
   top: 25%;
   transition: background-color 0.3s ease-in-out;
+  transition: transform 0.3s linear;
 }
 #status-reset:active{
   transform: translateY(2px);
@@ -219,6 +223,7 @@
   left: 43.8%;
   top: 33%;
   transition: background-color 0.3s ease-in-out;
+  transition: transform 0.3s linear;
   }
 #clear-log-btn:active{
   transform: translateY(2px);
@@ -226,7 +231,7 @@
 #clear-log-btn:hover{
   background-color: #5a8ff0;
 }
-#set-status-button{
+#set-status-button, #set-status-button2, #set-status-button3, #set-status-button4{
   position: relative;
   top: 5px;
   background-color: #4d7acc;
@@ -236,69 +241,17 @@
   border: none;
   border-radius: 12px;
   transform: translateY(2px);
-  transition: background-color 0.3s ease-in-out;
+  width: auto;
+  transition: transform 0.3s linear;
+  transition: background-color 0.3s linear;
 }
-#set-status-button:active{
+#set-status-button:active, #set-status-button2:active, #set-status-button3:active, #set-status-button4:active{
   transform: translateY(4px);
 }
-#set-status-button:hover{
+#set-status-button:hover, #set-status-button2:hover, #set-status-button3:hover, #set-status-button4:hover{
   background-color: #5a8ff0;
 }
-#set-status-button2{
-  position: relative;
-  top: 5px;
-  background-color: #4d7acc;
-  padding: 7px;
-  cursor: pointer;
-  text-decoration: none;
-  border: none;
-  border-radius: 12px;
-  transform: translateY(2px);
-  transition: background-color 0.3s ease-in-out;
-}
-#set-status-button2:hover{
-  background-color: #5a8ff0;
-}
-#set-status-button2:active{
-  transform: translateY(4px);
-}
-#set-status-button3{
-  position: relative;
-  top: 5px;
-  background-color: #4d7acc;
-  padding: 7px;
-  cursor: pointer;
-  text-decoration: none;
-  border: none;
-  border-radius: 12px;
-  transform: translateY(2px);
-  transition: background-color 0.3s ease-in-out;
-}
-#set-status-button3:active{
-  transform: translateY(4px);
-}
-#set-status-button3:hover{
-  background-color: #5a8ff0;
-}
-#set-status-button4{
-  position: relative;
-  top: 5px;
-  background-color: #4d7acc;
-  padding: 7px;
-  cursor: pointer;
-  text-decoration: none;
-  border: none;
-  border-radius: 12px;
-  transform: translateY(2px);
-  transition: background-color 0.3s ease-in-out;
-}
-#set-status-button4:active{
-  transform: translateY(4px);
-}
-#set-status-button4:hover{
-  background-color: #5a8ff0;
-}
-#set-button-buttons{
+#set-button-buttons, #reset-button-buttons{
   position: relative;
   bottom: 10px;
   background-color: #4d7acc;
@@ -308,30 +261,13 @@
   border: none;
   border-radius: 12px;
   transform: translateY(2px);
-  transition: background-color 0.3s ease-in-out;
+  transition: transform 0.3s linear;
+  transition: background-color 0.3s linear;
 }
-#set-button-buttons:active{
+#set-button-buttons:active, #reset-button-buttons:active{
   transform: translateY(4px);
 }
-#set-button-buttons:hover{
-  background-color: #5a8ff0;
-}
-#reset-button-buttons{
-  position: relative;
-  bottom: 10px;
-  background-color: #4d7acc;
-  padding: 7px;
-  cursor: pointer;
-  text-decoration: none;
-  border: none;
-  border-radius: 12px;
-  transform: translateY(2px);
-  transition: background-color 0.3s ease-in-out;
-}
-#reset-button-buttons:active{
-  transform: translateY(4px);
-}
-#reset-button-buttons:hover{
+#set-button-buttons:hover, #reset-button-buttons:hover{
   background-color: #5a8ff0;
 }
 #notification {
@@ -373,25 +309,69 @@
   display: none;
 }
 body{
-  background-color: #222222;
+  background-color: var(--bgcolor);
 }
 
-input[type="text"] {
-  color: white;
-  border: 1px solid #fff;
+#custom-status-details, #custom-status-state, #status-button-name1, #custom-status-link1, #status-button-name2, #custom-status-link2 {
+  position: relative;
+  text-align: center;
+  color: var(--bialy);
+  border: 1px solid var(--bialy);
   border-radius: 5px;
   background-color: transparent;
   padding: 5px;
-  transition: border-color 0.3s ease-in-out;
-  transition: border-radius 0.3s ease-in-out;
+  transition: 0.3s;
 }
 
-input[type="text"]:focus {
-  border-radius: 9px;
+#custom-status-details:focus, #custom-status-state:focus, #status-button-name1:focus, #custom-status-link1:focus:focus, #status-button-name2:focus, #custom-status-link2:focus {
+  border-right: 0px;
+  border-top: 0px;
+  border-left: 0px;
+  border-radius: 0px;
   outline: none;
   border-color: #4270c5;
+  transition: 0.3s;
 }
-
+#details, #state, #nazwa, #link, #nazwa2, #link2{
+  color: var(--bialy);
+  position: relative;
+  top: -3px;
+  left: 0px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+#nazwa {
+  top: -14px;
+}
+#link {
+  top: -4px;
+}
+#nazwa2 {
+  top: -24px;
+}
+#link2 {
+  top: -14px;
+}
+input[type="text"]:focus, #custom-status-details:focus ~ #details, #custom-status-details:valid ~ #details{
+  top: -25px;
+}
+input[type="text"]:focus, #custom-status-state:focus ~ #state, #custom-status-state:valid ~ #state{
+  top: -25px;
+}
+input[type="text"]:focus, #status-button-name1:focus ~ #nazwa, #status-button-name1:valid ~ #nazwa{
+  top: -35px;
+}
+input[type="text"]:focus, #custom-status-link1:focus ~ #link, #custom-status-link1:valid ~ #link{
+  top: -25px;
+}
+input[type="text"]:focus, #status-button-name2:focus ~ #nazwa2, #status-button-name2:valid ~ #nazwa2{
+  top: -45px;
+}
+input[type="text"]:focus, #custom-status-link2:focus ~ #link2, #custom-status-link2:valid ~ #link2{
+  top: -35px;
+}
 select {
   text-align-last: center;
   text-align: center;
@@ -404,10 +384,19 @@ select {
 select option {
   text-align: center;
 }
+#status-select {
+  position: relative;
+  left: 2px;
+}
+#status-select2 {
+  position: relative;
+  left: -1px;
+}
 #select-button-ilosc{
+  position: relative;
+  top: 5px;
   width: 50px;
 }
-
 .container {
   width: 51px;
   height: 31px;
@@ -468,26 +457,65 @@ select option {
   top: calc(50% - 27px/2);
 }
 #kolor-tla{
+  pointer-events: none;
   position: relative;
   top: 50px;
   right: 120px;
   font-size: 20px;
-  color: white;
+  color: var(--bialy);
 }
 #config-status{
+  pointer-events: none;
   position: relative;
   top: 40px;
   right: 190px;
   font-size: 20px;
-  color: white;
+  color: var(--bialy);
 }
 #config-przycisk{
+  pointer-events: none;
   position: relative;
   top: 40px;
   right: 190px;
   font-size: 20px;
-  color: white;
+  color: var(--bialy);
 }
-
-
+#config-reset{
+  pointer-events: none;
+  position: relative;
+  top: 40px;
+  right: 190px;
+  font-size: 20px;
+  color: var(--bialy);
+}
+#config-reset-notification {
+  pointer-events: none;
+  position: relative;
+  top: 50px;
+  left: -100px;
+  font-size: 15px;
+  color: var(--bialy);
+  transition: 0.4s;
+}
+#reset-config {
+  position: relative;
+  background-color: #4d7acc;
+  padding: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  transform: translateY(2px);
+  transition: transform 0.3s linear;
+  transition: background-color 0.3s linear;
+  left: 20px;
+  top: 2px;
+  text-align: center;
+}
+#reset-config:active {
+  transform: translateY(4px);
+}
+#reset-config:hover{
+  background-color: #5a8ff0;
+}
   

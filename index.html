@@ -7,22 +7,22 @@
 </head>
 <body>
   <div>
-    <button onclick="ustawieniain()" id="ustawieniain" title="Ustawienia"><i class="fa-solid fa-gear fa-lg" id="button5" style="color: white;"></i></button>
+    <button onclick="ustawieniain()" id="ustawieniain" title="Ustawienia"><i class="fa-solid fa-gear fa-lg" id="button5"></i></button>
    </div>
   <h1 id="tytul">MTA Discord Rich Presence 4Life Edition</h1>
   <p id="wersja"></p>
           <div class="sidebar">
             <div>
-             <button onclick="frakcje()" id="frakcje-biznesy" title="Frakcje i biznesy"><i class="fa-solid fa-briefcase" id="button1" style="color: white;"></i></button>
+             <button onclick="frakcje()" id="frakcje-biznesy" title="Frakcje i biznesy"><i class="fa-solid fa-briefcase" id="button1"></i></button>
             </div>
             <div>
-              <button onclick="prace()" id="prace" title="Prace"><i class="fa-solid fa-person-digging" id="button2" style="color: white;"></i></button>
+              <button onclick="prace()" id="prace" title="Prace"><i class="fa-solid fa-person-digging" id="button2"></i></button>
              </div>
              <div>
-              <button onclick="custom()" id="custom" title="Własny status"><i class="fa-regular fa-keyboard" id="button3" style="color: white;"></i></button>
+              <button onclick="custom()" id="custom" title="Własny status"><i class="fa-regular fa-keyboard" id="button3"></i></button>
              </div>
              <div>
-              <button onclick="przyciski()" id="przyciski" title="Przyciski"><i class="fa-regular fa-square-check" id="button4" style="color: white;"></i></button>
+              <button onclick="przyciski()" id="przyciski" title="Przyciski"><i class="fa-regular fa-square-check" id="button4"></i></button>
              </div>
            </div>
 
@@ -31,6 +31,7 @@
           <div style="display: block;" class="sidebar-items" id="sidebar-items-frakcje">
         <h3 class="frakcje">Frakcje i Biznesy</h3>
         <select id="status-select">
+            <option value="Wybierz Frakcje" selected>Wybierz Frakcje</option>
             <option value="San Andreas Police Department">San Andreas Police Department</option>
             <option value="San Andreas Fire Department">San Andreas Fire Department</option>
             <option value="San Andreas Medical Department">San Andreas Medical Department</option>
@@ -40,6 +41,7 @@
         <br>
         <button id="set-status-button">Ustaw Status Frakcyjny</button><br></br>
         <select id="status-select2">
+          <option value="Wybierz Biznes" selected>Wybierz Biznes</option>
             <option value="4Music">4Music</option>
             <option value="Redakcja 4Life News">Redakcja 4Life News</option>
             <option value="Studio Filmowe 4Life">Studio Filmowe 4Life</option>
@@ -61,6 +63,7 @@
           <div style="display: none;" class="sidebar-items" id="sidebar-items-prace">
             <h3 class="frakcje">Prace</h3>
             <select id="status-select3">
+                <option value="Wybierz Pracę" selected>Wybierz Pracę</option>
                 <option value="Lawety">Lawety</option>
                 <option value="Kurier">Kurier</option>
                 <option value="Magazynier">Magazynier</option>
@@ -68,7 +71,7 @@
                 <option value="Sweeper">Sweeper</option>
                 <option value="Kopalnia">Kopalnia</option>
                 <option value="Kosiarki">Kosiarki</option>
-                <option value="Dodo">Dodo</option>
+                <option value="Air Post">Air Post</option>
                 <option value="Śmieciarki">Śmieciarki</option>
                 <option value="eTransporter">eTransporter</option>
                 <option value="Odśnieżarki">Odśnieżarki</option>
@@ -84,28 +87,38 @@
                     
     <div style="display: none;" class="sidebar-items" id="sidebar-items-custom">
         <h3 class="frakcje">Własny Status</h3>
-        <input id="custom-status-details" type="text" placeholder="Details" required><br><br>
-        <input id="custom-status-state" type="text" placeholder="State" required><br>
-        <input type="submit" name="" id="set-status-button4" value="Ustaw Własny status">
+        <input id="custom-status-details" style="top: 20px;" type="text" required><br>
+        <label id="details">Details</label><br>
+        <input id="custom-status-state" style="top: 20px;" type="text" required><br>
+        <label id="state">State</label><br>
+        <input type="submit" style="top: 20px;" id="set-status-button4" value="Ustaw Własny status">
         <br>
-        <h4 id="tekst">Oznaczenie pól</h4>
-        <img id="status_help" src="img/status_help.png">
+        <h4 style="top: 25px; position: relative;" id="tekst">Oznaczenie pól</h4>
+        <img style="top: 25px;" id="status_help" src="img/status_help.png">
       </div>
 
                 <!-- Buttony -->
         
    <div style="display: none;" class="sidebar-items" id="sidebar-items-przyciski">
       <h3 class="frakcje">Przyciski</h3>
-      <label id="tekst" for="select-button-ilosc">Ilość przycisków</label><br>
-      <select id="select-button-ilosc" name="select">
+      <label id="tekst" style="top: 0px; position: relative;" for="select-button-ilosc">Ilość przycisków</label><br>
+      <select style="top: 5px;" id="select-button-ilosc" name="select">
       <option value="1" selected>1</option>
       <option value="2">2</option>
       </select><br></br>
-      <input id="status-button-name1" type="text" placeholder="Nazwa" required><br><br>
-      <input id="custom-status-link1" type="text" placeholder="Link" required><br><br>
-      <div id="drugie-button"></div>
-      <input type="submit" name="" id="set-button-buttons" value="Ustaw przyciski">
-      <input type="submit" name="" id="reset-button-buttons" value="Usuń przyciski">
+      <input id="status-button-name1" style="top: 10px;" type="text" required><br>
+      <label id="nazwa">Nazwa</label><br>
+      <input id="custom-status-link1" style="top: 20px;" type="text" required><br>
+      <label id="link">Link</label><br>
+      <div id="drugie-button" style="display: none;">
+        <h4 id="tekst" style="text-align: center;">Drugi Przycisk</h4>
+        <input id="status-button-name2" style="top: 0px" type="text" required><br>
+        <label id="nazwa2">Nazwa</label><br>
+        <input id="custom-status-link2" style="top: 10px" type="text" required><br>
+        <label id="link2">Link</label><br>
+      </div>
+      <input type="submit" name="" style="top: 10px;" id="set-button-buttons" value="Ustaw przyciski">
+      <input type="submit" name="" style="top: 10px;" id="reset-button-buttons" value="Usuń przyciski">
     </div>
 
   <button id="status-reset">Zresetuj status</button>
@@ -122,7 +135,7 @@
       <div style="display: none;" class="ustawienia-okno" id="sidebar-items-ustawienia">
         <h1 class="frakcje">Ustawienia</h1>
               <div>
-        <button onclick="ustawieniaout()" id="ustawienia-out" title="Powrót"><i class="fa-solid fa-arrow-left fa-2xl" id="button6" style="color: #ffffff;"></i></button>
+        <button onclick="ustawieniaout()" id="ustawienia-out" title="Powrót"><i class="fa-solid fa-arrow-left fa-2xl" id="button6"></i></button>
        </div>
        <a id="kolor-tla" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;"></a>
        <div class="container">
@@ -132,7 +145,7 @@
         </label>
       </div>
       <a id="config-status" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Automatyczne ustawianie własnego</a><br>
-      <a id="config-status" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">statusu przy uruchomieniu aplikacji</a>
+      <a id="config-status" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">statusu przy uruchomieniu aplikacji.</a>
       <div class="container2">
         <input type="checkbox" class="checkbox" id="checkbox2">
         <label class="switch" for="checkbox2">
@@ -140,13 +153,17 @@
         </label>
       </div>
       <a id="config-przycisk" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Automatyczne ustawianie własnego</a><br>
-      <a id="config-przycisk" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">przycisku przy uruchomieniu aplikacji</a>
+      <a id="config-przycisk" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">przycisku przy uruchomieniu aplikacji.</a>
       <div class="container3">
         <input type="checkbox" class="checkbox" id="checkbox3">
         <label class="switch" for="checkbox3">
           <span class="slider"></span>
         </label>
       </div>
+      <a id="config-reset" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Wyczyść plik konfiguracyjny.</a><br>
+      <input type="submit" onclick="resetconfigu()" id="reset-config" value="Zresetuj
+plik konfiguracyjny">
+      <a id="config-reset-notification" style="display: none; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;"></a>
       </div>
 
   <div id="notification" class="hidden">

@@ -9,6 +9,8 @@ const sanitizeHtml = require('sanitize-html');
 const Store = require('electron-store');
 const store = new Store();
 const find = require('find-process');
+const args = process.argv.slice(1);
+const isDev = args.some(arg => arg === '--dev');
 
 
 autoUpdater.autoDownload = true;
@@ -50,10 +52,13 @@ function createWindow() {
       },
     });
 
-  win.removeMenu();
-  win.webContents.on('devtools-opened', () => {
-  win.webContents.closeDevTools();
-  });
+    if (isDev) {
+      // Otwieranie narzędzi deweloperskich tylko w trybie deweloperskim
+      win.webContents.openDevTools();
+    } else {
+      // Usuwanie paska narzędziowego w trybie produkcyjnym
+      win.removeMenu();
+    }
 
   win.webContents.on('before-input-event', (event, input) => {
     if (input.control && input.shift && input.key.toLowerCase() === 'i') {
@@ -93,7 +98,7 @@ async function checkProcess() {
       setRichPresence();
     } else if (processes.length === 0 && isRunning || !dziala) {
       //console.log('MTA jest wylaczone');
-      win.webContents.send('log', 'MTA jest wyłączone! ❌');
+      win.webContents.send('log', 'MTA jest wyłączone! ❌');;
       dziala = true
       isRunning = false;
       win.logsSent.isRunning = false;
@@ -639,7 +644,7 @@ ipcMain.on('set-status3', (event, status3) => {
         win.webContents.send('log', 'MTA jest wyłączone! ❌');
       }
           break;
-          case 'Dodo':
+          case 'Air Post':
         if (win.logsSent.isRunning == true) {
           const activity = {
           details: `• Praca: ${status3}`,
@@ -777,10 +782,10 @@ ipcMain.on('set-status4', (event, statusDetails, statusState) => {
 // 1 Przycisk
 
 ipcMain.on('set-button1', (event, Nazwa1, Link1) => {
-  buttons = [
-    { label: Nazwa1, url: Link1 },
-  ];
   if(win.logsSent.isRunning == true){
+    buttons = [
+      { label: Nazwa1, url: Link1 },
+    ];
     currentStatus = null;
     currentStatus2 = null;
     currentStatus3 = null;
@@ -791,12 +796,12 @@ ipcMain.on('set-button1', (event, Nazwa1, Link1) => {
 });
 
 // 2 Przyciski
-ipcMain.on('set-button2', (event, Nazwa1, Link1, Link2, Nazwa2) => {
-  buttons = [
-    { label: Nazwa1, url: Link1 },
-    { label: Nazwa2, url: Link2 },
-  ];
+ipcMain.on('set-button2', (event, Nazwa1, Link1, Nazwa2, Link2) => {
   if(win.logsSent.isRunning == true){
+    buttons = [
+      { label: Nazwa1, url: Link1 },
+      { label: Nazwa2, url: Link2 },
+    ];
     currentStatus = null;
     currentStatus2 = null;
     currentStatus3 = null;
@@ -864,7 +869,7 @@ app.whenReady().then(() => {
 
   createWindow();
 
-          
+          if(!isDev){
         // Sprawdź update
         setTimeout(sprawdzupdate, 1000)
         setInterval(autoupdate20min, 1200000);
@@ -895,6 +900,7 @@ app.whenReady().then(() => {
         store.set('releaseNotes', info.releaseNotes);
         autoUpdater.quitAndInstall()
       });
+    }
 
 
   win.webContents.on('did-finish-load', () => {
